@@ -1,0 +1,24 @@
+{
+  "name": "jsonfp",
+  "version": "0.0.1",
+  "description": "Functional programming with JSON.",
+  "engines": "0.10.21",
+  "main": "lib/lamdaApp.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benlue/jsonfp.git"
+  },
+  "keywords": [
+    "node.js",
+    "functional programming",
+    "json"
+  ],
+  "author": {
+    "name": "Ben Lue, Gocharm Inc."
+  },
+  "license": "GPL 2.0",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "lodash": "^2.4.1"
+  }
+}
