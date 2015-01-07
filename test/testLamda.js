@@ -66,6 +66,7 @@ describe('Try JSON programming...', function() {
         assert.equal(result[0].tagList.length, 2, 'a page has two tags');
         assert.equal(result[0].tagList[0], 'COIMOTION', 'tag is not correct');
         assert.equal(result[1].tagList[0], 'Open Data', 'tag is not correct');
+        //console.log( JSON.stringify(result, null, 4) );
     });
 
     it('qualify page list with specified tags', function()  {

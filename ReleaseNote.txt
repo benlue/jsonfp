@@ -1,0 +1,9 @@
+0.0.3
+=====
+. provided some basic documentation in README
+. built-in operators are tested
+. it's a working prototype now.
+
+0.0.1
+=====
+. worked with test cases.

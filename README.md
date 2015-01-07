@@ -7,7 +7,13 @@ Those questions/issues lead to the idea of doing functional programming in JSON.
 
 JSON-fp is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-fp is trying to achieve.
 
-**Note**: The current implementation is in the very early stage. In fact, it's nothing more than making the test cases work. The code was used to show case the idea. Any comments/feedback are welcome.
+## Install
+
+    npm install jsonfp
+    
+
+## Getting started
+If you really like to dive in, test files under the _test_ directory is a good place to start. Those test cases are also good examples.
 
 ## Format
 A JSON-fp program is a JSON object with a single property. The property key is the "operator" which works on the input data while the property value specifies options to that operator. So a JSON-fp program is as simple as:
@@ -20,7 +26,7 @@ The interesting part is that _options_ can be yet another JSON-fp program. A typ
     	"pick": "title"
     }
 
-In fact, an expression as simple as {op: options} can trun into a really sophisticated application.
+By substituting options with a JSON-fp program, an expression as simple as {op: options} can turn into a really sophisticated application.
 
 
 ### Operators
@@ -30,11 +36,13 @@ Below are operators currently supported:
 
 + **difference**: Output an array by excluding all values specified in the option array. Syntax: _{difference: [...]}_
 
++ **eval**: this operator will iterate through every property of its option and try to evaluate the property value as a JSON-fp program.
+
 + **flatten**: flats the input array to be an array of single level.
 
 + **intersection**: intersect the input array with the option array.
 
-+ **map**: it's option should be an operator. Each element of the input array will be the input to the option operator.
++ **map**: it's option should be a JSON-fp program. Each element of the input array will be the input to the option program.
 
 + **merge**: recursively merges the option object into the input object.
 
@@ -55,3 +63,5 @@ If the above description is too brief, you may want to refer [Lo-Dash](https://l
 + what is the minimum set of operators to implement?
 
 + formalize operator options using json-schema?
+
++ capable of taking promise as input data
