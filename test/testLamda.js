@@ -43,7 +43,7 @@ describe('Try JSON programming...', function() {
         var  p = {
             map: {
                 merge: {
-                    source: {
+                    eval: {
                         tagList: {
                             chain: [
                                 {
@@ -82,7 +82,7 @@ describe('Try JSON programming...', function() {
                 {
                     map: {
                         merge: {
-                            source: {
+                            eval: {
                                 tagList: {
                                     chain: [
                                         {
