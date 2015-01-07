@@ -8,6 +8,7 @@ var  sampleList = [
      sampleCtx = {};
 
 before(function()  {
+    // add customized methods (functions)
     lamda.addMethod('data', doData);
 });
 
