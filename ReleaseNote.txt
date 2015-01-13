@@ -1,3 +1,10 @@
+0.0.4
+=====
+. cleared up syntax (please check README for details)
+. supported alpha-conversion
+. more operators are supported (add, def, convert, eval, pluck, reduce).
+. much more detailed description in README
+
 0.0.3
 =====
 . provided some basic documentation in README

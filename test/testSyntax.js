@@ -35,7 +35,7 @@ describe('Test syntax...', function() {
         expr = {
             name: {add:
                 {
-                    _input: 'Lenon',
+                    _input: 'Lennon',
                     _expr: 'John '
                 }
             },
@@ -47,7 +47,7 @@ describe('Test syntax...', function() {
             }
         };
         result = lamda.apply('whatever', expr);
-        assert.equal(result.name, 'John Lenon', 'name is John Lenon');
+        assert.equal(result.name, 'John Lennon', 'name is John Lennon');
         assert.equal(result.path, '/usr/lib', 'path is /usr/lib');
         //console.log(JSON.stringify(result, null, 4));
     });

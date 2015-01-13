@@ -1,6 +1,6 @@
 {
   "name": "jsonfp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Functional programming in JSON.",
   "engines": "0.10.21",
   "main": "lib/lamdaApp.js",
@@ -11,6 +11,7 @@
   "keywords": [
     "node.js",
     "functional programming",
+    "metaprogramming",
     "json"
   ],
   "author": {

@@ -60,6 +60,8 @@ describe('JSON-fp programming...', function() {
                 }
             };
 
+        // the {take: } expression needs a number.
+        // we'll feed the number using the context ('ctx') as shown below.
         var  ctx = {showTag: 2},
              result = lamda.apply( ctx, sampleList, p );
 
