@@ -12,7 +12,7 @@ before(function()  {
     lamda.addMethod('data', doData);
 });
 
-describe('Try JSON programming...', function() {
+describe('JSON-fp programming...', function() {
     it('map and pick', function() {
         // the following program is equivalent to:
         // list.map(function(page) {
@@ -20,7 +20,7 @@ describe('Try JSON programming...', function() {
         // });
         var  p = {
             map: {
-                pick: 'title'
+                def: {pick: 'title'}
             }
         };
 
@@ -40,33 +40,33 @@ describe('Try JSON programming...', function() {
         //          flatten('tword');
         //    return page;
         // });
-        var  p = {
-            map: {
-                merge: {
-                    eval: {
-                        tagList: {
-                            chain: [
+        var  p = {map:
+                {def:
+                    {merge:
+                        {tagList:
+                            {chain: [
                                 {
                                     data: {
                                         api: "pageTag/list",
-                                        option: {page_id: '$item.page_id'}
+                                        option: {page_id: '$in.page_id'}
                                     }
                                 },
-                                {take: '$inData.showTag'},
+                                {take: '$showTag'},
                                 {flatten: 'tword'}
                                 ]
+                            }
                         }
                     }
                 }
-            }
-        };
+            };
 
-        var  ctx = {inData: {showTag: 2}},
+        var  ctx = {showTag: 2},
              result = lamda.apply( ctx, sampleList, p );
+
+        //console.log( JSON.stringify(result, null, 4) );
         assert.equal(result[0].tagList.length, 2, 'a page has two tags');
         assert.equal(result[0].tagList[0], 'COIMOTION', 'tag is not correct');
         assert.equal(result[1].tagList[0], 'Open Data', 'tag is not correct');
-        //console.log( JSON.stringify(result, null, 4) );
     });
 
     it('qualify page list with specified tags', function()  {
@@ -78,18 +78,18 @@ describe('Try JSON programming...', function() {
         //    return page;
         // }).
         // where({tagList: $inData.tags});
-        var p = {
-            chain: [
-                {
-                    map: {
-                        merge: {
-                            eval: {
-                                tagList: {
-                                    chain: [
+        var p = {chain:
+            [
+                {map:
+                    {def:
+                        {merge:
+                            {tagList:
+                                {chain:
+                                    [
                                         {
                                             data: {
                                                 api: 'pageTag/list',
-                                                option: {page_id: '$item.page_id'}
+                                                option: {page_id: '$in.page_id'}
                                             }
                                         },
                                         {
@@ -101,31 +101,79 @@ describe('Try JSON programming...', function() {
                         }
                     }
                 },
-                {
-                    where: {
-                        tagList: '$inData.tags'
-                    }
+                {where:
+                    {tagList: '$tags'}
                 }
             ]
         };
 
-        var  ctx = {inData: {tags: ['API', 'reactive']}},
+        var  ctx = {tags: ['API', 'reactive']},
              result = lamda.apply( ctx, sampleList, p );
         //console.log('---- result ----\n%s', JSON.stringify(result, null, 4));
         assert.equal(result.length, 1, 'only one match');
         assert.equal(result[0].page_id, 33, 'wrong page');
 
-        ctx = {inData: {tags: ['COIMOTION']}},
+        ctx = {tags: ['COIMOTION']},
         result = lamda.apply( ctx, sampleList, p );
         //console.log('---- result ----\n%s', JSON.stringify(result, null, 4));
         assert.equal(result.length, 2, 'has two matches');
     });
+
+    it('test reduction', function() {
+        var  p = {chain: [
+                {convert:
+                    {
+                        var: 'x',
+                        expr: ['/Person/query/', 'x']
+                    }
+                },
+                {reduce:
+                    {def:
+                        {add: '$accumulator'}
+                    }
+                }
+             ]},
+             result = lamda.apply(3, p);
+        //console.log('result is: %s', result);
+        assert.equal( result, '/Person/query/3', 'x not converted to 3');
+    });
 });
 
 
-function  doData(p)  {
+describe('JSON-fp meta programming...', function() {
+    it('convert and evaluate', function() {
+        // this example is equivalent to {map: {def: {pick: 'title'}}}
+        // except that the actual program is obtained by alpha-conversion.
+        // Once the program is derived, we use 'eval' to apply it.
+        // The nice thing is that if we change 'expr' in the context variable,
+        // we can generate a different program.
+        var  p = {eval:
+                {convert:
+                    {
+                        _input: '$expr',
+                        _expr: {
+                            var: 'e',
+                            expr: {map: 'e'}
+                        }
+                    }
+                },
+             },
+             expr = {def: {pick: 'title'}},
+             ctx = {expr: expr},
+             result = lamda.apply(ctx, sampleList, p);
+
+        //console.log('result is: %s', JSON.stringify(result, null, 4));
+        assert.equal( result.length, 2, 'still have 2 items');
+        assert.equal( result[0].title, 'A book', 'title not match');
+        assert(!result[0].psnID, 'psnID should be removed');
+    });
+});
+
+
+function  doData(input, p)  {
     // assuming we'll query the 'pageTag' table to find the tags of a page
-    var  pageID = evalVar(this, p.option.page_id.substring(1)),
+    //console.log('data option is\n%s', JSON.stringify(p, null, 4));
+    var  pageID = p.option.page_id,
          tagList;
 
     if (pageID === 33)
@@ -142,14 +190,4 @@ function  doData(p)  {
             ];
 
     return  tagList;
-};
-
-
-function evalVar(ctx, s)  {
-    var  parts = s.split('.'),
-         v = ctx;
-    for (var i in parts)
-        v = v[parts[i]];
-
-    return  v;
 };
