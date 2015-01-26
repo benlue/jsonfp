@@ -12,7 +12,7 @@ JSON-FP is part of an attempt to make data freely and easily accessed, distribut
     npm install jsonfp
     
 ## What's new
-The latest release supported promise (via [bluebird](https://github.com/petkaantonov/bluebird)). For details, please check the [release note](./releaseNote.md).
+The latest release supported promise (via [bluebird](https://github.com/petkaantonov/bluebird)). For details, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
 
 ## Getting started
 If you really like to dive in, test files under the _test_ directory is a good place to start. Those test cases are also good examples.
