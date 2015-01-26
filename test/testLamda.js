@@ -1,5 +1,6 @@
 var  assert = require('assert'),
-     lamda = require('../lib/lamdaApp.js');
+     lamda = require('../lib/lamdaApp.js'),
+     Promise = require('bluebird');
 
 var  sampleList = [
             {title: 'A book', psnID: 24, page_id: 33},
@@ -10,6 +11,7 @@ var  sampleList = [
 before(function()  {
     // add customized methods (functions)
     lamda.addMethod('data', doData);
+    lamda.addMethod('promise', doPromise);
 });
 
 describe('JSON-fp programming...', function() {
@@ -172,6 +174,32 @@ describe('JSON-fp meta programming...', function() {
 });
 
 
+describe('Hanlding promise...', function(done) {
+    it('Simple promise', function(done) {
+        var  p = {promise: 2},
+             result = lamda.apply(1, p);
+
+        result.then(function(v) {
+            assert.equal(v, 3, 'the result is 3');
+            done();
+        });
+        //console.log('result:\n%s', JSON.stringify(result, null, 4));
+    });
+
+    it('Simple promise with array input', function(done) {
+        var  p = {map: {def: {promise: 2}}},
+             result = lamda.apply([1, 2, 3], p);
+        result.then(function(v) {
+            assert.equal(v[0], 3, 'elem #1 is 3');
+            assert.equal(v[1], 4, 'elem #2 is 4');
+            assert.equal(v[2], 5, 'elem #3 is 5');
+            done();
+        });
+        //console.log('result:\n%s', JSON.stringify(result, null, 4));
+    });
+});
+
+
 function  doData(input, p)  {
     // assuming we'll query the 'pageTag' table to find the tags of a page
     //console.log('data option is\n%s', JSON.stringify(p, null, 4));
@@ -192,4 +220,11 @@ function  doData(input, p)  {
             ];
 
     return  tagList;
+};
+
+
+function  doPromise(input, v)  {
+    return  new Promise(function(resolve, reject) {
+        resolve(input + v);
+    });
 };

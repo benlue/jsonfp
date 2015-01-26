@@ -1,6 +1,6 @@
 {
   "name": "jsonfp",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Functional programming in JSON.",
   "engines": "0.10.21",
   "main": "lib/lamdaApp.js",
@@ -20,6 +20,7 @@
   "license": "GPL 2.0",
   "readmeFilename": "README.md",
   "dependencies": {
+    "bluebird": "^2.6.4",
     "lodash": "^2.4.1"
   }
 }

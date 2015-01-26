@@ -17,6 +17,24 @@ describe('Test syntax...', function() {
         assert.equal( result[0], 1, 'first element is 1');
     });
 
+    it('evaluate variables', function() {
+        var  result = lamda.apply('Hello', '$in');
+        assert.equal(result, 'Hello', "should be 'Hello'");
+
+        result = lamda.apply('Hello', '$in World!');
+        assert.equal(result, 'Hello World!', "should be 'Hello World!'");
+
+        result = lamda.apply('World', 'Hello $in!');
+        assert.equal(result, 'Hello World!', "should be 'Hello World!'");
+
+        result = lamda.apply({hello: 'Hello'}, '$in.hello World!');
+        assert.equal(result, 'Hello World!', "should be 'Hello World!'");
+
+        result = lamda.apply({hello: 'Hello'}, {world: 'World'}, '$hello $in.world');
+        assert.equal(result, 'Hello World', "should be 'Hello World'");
+        //console.log( result );
+    });
+
     it('evaluate expressions', function() {
         var  expr = {add: 4},
              result = lamda.apply(12, expr);

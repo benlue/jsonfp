@@ -1,16 +1,18 @@
-JSON-fp
+JSON-FP
 =======
 
-In a decentralized computing environment, it will be a common practice to pass programming codes to various machines to execute (and then gather the results). However, how can machines of various configurations understand each other? Also, the "moving code, least moving data" policy prefers functional programming to imperative programming.
+In a decentralized computing environment, it will be a better practice to pass programming codes to various machines to execute (and then gather the results) when the application is dealing with huge amount of data. However, how can machines of various configurations understand each other? Also, the "moving code, least moving data" policy may work better with functional programming than imperative programming.
 
-Those questions/issues lead to the idea of doing functional programming in JSON. If programs can be coded in JSON, they will be easy to be shipped around and understood by machines of vaious settings. Combining JSON and functional programming also makes security issues easier to track or manage.
+Those questions/issues lead to the idea of doing functional programming in JSON. If programs can be coded in JSON, they can be easily shipped around and understood by machines of vaious settings. Combining JSON and functional programming also makes security issues easier to track or manage.
 
-JSON-fp is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-fp is trying to achieve.
+JSON-FP is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-fp is trying to achieve.
 
 ## Install
 
     npm install jsonfp
     
+## What's new
+The latest release supported promise (via [bluebird](https://github.com/petkaantonov/bluebird)). For details, please check the [release note](./releaseNote.md).
 
 ## Getting started
 If you really like to dive in, test files under the _test_ directory is a good place to start. Those test cases are also good examples.

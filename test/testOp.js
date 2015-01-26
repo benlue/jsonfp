@@ -50,8 +50,8 @@ describe('Test build-in operators...', function() {
         p.difference = '$diffAry';
         var  ctx = {diffAry: [2,4]};
         result = lamda.apply( ctx, list, p );
-        assert.equal(result.length, 3, 'should have 3 elements');
         //console.log( JSON.stringify(result, null, 4) );
+        assert.equal(result.length, 3, 'should have 3 elements');
     });
 
     it('flatten', function() {
