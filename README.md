@@ -5,7 +5,7 @@ In a decentralized computing environment, it will be a better practice to pass p
 
 Those questions/issues lead to the idea of doing functional programming in JSON. If programs can be coded in JSON, they can be easily shipped around and understood by machines of vaious settings. Combining JSON and functional programming also makes security issues easier to track or manage.
 
-JSON-FP is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-fp is trying to achieve.
+JSON-FP is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-FP is trying to achieve.
 
 ## Install
 
@@ -24,7 +24,7 @@ If you really like to dive in, test files under the _test_ directory is a good p
 + **[testSyntax](https://github.com/benlue/jsonfp/blob/master/test/testSyntax.js).js**: how variables, objects and arrays are evaluated.
 
 ### Run programs
-Below is how you can run or evaluate a JSON-fp program:
+Below is how you can run or evaluate a JSON-FP program:
 
     var  jsonfp = require('jsonfp');
     
@@ -34,36 +34,36 @@ Below is how you can run or evaluate a JSON-fp program:
     // or simply
     jsonfp.apply(input, program);
     
-_program_ should be a JSON-fp program and _input_ can be any value. _Context_ is a plain object to act as an additional data channel to a program.
+_program_ should be a JSON-FP program and _input_ can be any value. _Context_ is a plain object to act as an additional data channel to a program.
 
 
 ## Format
-A JSON-fp program is a JSON object with a single property. The property key is the "operator" which works on the input data while the property value specifies options to that operator. So a JSON-fp program is as simple as:
+A JSON-FP expression is a JSON object with a single property. The property key is the "operator" which works on the input data while the property value specifies options to that operator. So a JSON-FP expression is as simple as:
 
     {op: options}
 
-The interesting part is that _options_ can be yet another JSON-fp program. A typical example would be the case of applying the "map" operator. Assuming we have a list of documents and we want to remove all properties but the title property for each document. Below is what you can do with JSON-fp:
+The interesting part is that _options_ can be yet another JSON-FP expression. A typical example would be the case of applying the "map" operator. Assuming we have a list of documents and we want to remove all properties but the title property for each document. Below is what you can do with JSON-FP:
 
     "map": {
     	def: {"pick": "title"}
     }
 
-By substituting options with a JSON-fp program, an expression as simple as {op: options} can turn into a really sophisticated application.
+By substituting options with another JSON-FP expression, an expression as simple as {op: options} can turn into a really sophisticated application.
 
 ### Applying input
-When running a JSON-fp program, you have to provide the initial input data. After that, the input data flow will become implicit. For example, when operators are chained, input data will be fed to the beginning of the chain and every operator will get its input from the output of its predecesor. Another example is the 'map' operator which will iterate through its own input (should be an array or a collection) and feed each element as the input to its child expression. In other words, the parent expression will decide how to provide input to its child expressions without needing explicit specifications by programmers.
+When running a JSON-FP program, you have to provide the initial input data. After that, the input data flow will become implicit. For example, when operators are chained, input data will be fed to the beginning of the chain and every operator will get its input from the output of its predecesor. Another example is the 'map' operator which will iterate through its input (should be an array or a collection) and feed each element as the input to its child expression. In other words, the parent expression will decide how to provide input to its child expressions without needing explicit specifications by application developers.
 
-However, sometimes it may be convenient or even necessary to explicitly specify input to a JSON-fp expression. In that case, you can do the following:
+However, sometimes it may be convenient or even necessary to explicitly specify input to a JSON-FP expression. In that case, you can do the following:
 
     var  expr = {
         	_input: INPUT_TO_THE_EXPRESSION
         	_expr: THE_ACTUATION_JSON-FP_EXPRESSION
          };
 
-In other words, you can wrap up a JSON-fp expression with another plain object and specify the input in that object.
+In other words, you can wrap up a JSON-FP expression with another plain object and specify the input in that object.
 
 ### Evaluation
-Anything that you send as an expression to JSON-fp will be evaluated recursively until a scalar is found. For example:
+Anything that you send as an expression to JSON-FP will be evaluated recursively until a scalar is found. For example:
 
     var  expr = {name: 'David'},
     	 result = jsonfp.apply('Jones', expr);
@@ -78,11 +78,11 @@ The console will print out {name: 'David'}. However, if you do something like:
 This time {name: 'David Jones'} will be printed.
 
 ### Variables
-You can refer to variables in a JSON-fp expression. Since we do not want to break JSON parsing, JSON-fp variables are expressed as a string with leading a '$'. For example, '$title' or '$in.id'.
+You can refer to variables in a JSON-FP expression. Since we do not want to break JSON parsing, JSON-FP variables are expressed as a string with leading a '$'. For example, '$title' or '$in.id'.
 
-Input to an JSON-fp expression can be referred to with the '$in' variable. Assuming the input is a plain object with a 'title' property, then you can refe to that title property using '$in.title'.
+Input to an JSON-FP expression can be referred to with the '$in' variable. Assuming the input is a plain object with a 'title' property, then you can refe to that title property using '$in.title'.
 
-Besides input, you can put all other variables in the context variable and refer them. Below is an exmaple showing how you can use context variables:
+Besides input, you can put all other variables in the context variable and refer to them. Below is an exmaple showing how you can use context variables:
 
     var  expr = {name: {add: '$firstName'}},
     	 ctx = {firstName: 'David '},
@@ -131,7 +131,7 @@ Below are operators currently supported:
 If the above description is too brief, you may want to refer [Lo-Dash](https://lodash.com/docs#pick) documentation. Most operators listed above are realized by Lo-Dash.
 
 ## Metaprogramming
-Since the format of JSON-fp is so simple, it would not be too difficult to make programs to produce JSON-fp programs. To make that even easier, the **convert** operator is added to support variable renaming or subsititution. The idea is based on alpha-conversion of lamda calculus.
+Since the format of JSON-FP is so simple, it would not be too difficult to make programs to produce JSON-FP programs. To make that even easier, the **convert** operator is added to support variable renaming or subsititution. The idea is based on alpha-conversion of lamda calculus.
 
 There is a simple example in [testLamda.js](https://github.com/benlue/jsonfp/blob/master/test/testLamda.js) if you're interested.
 
