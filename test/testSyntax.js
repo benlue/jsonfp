@@ -1,6 +1,12 @@
 var  assert = require('assert'),
      lamda = require('../lib/lamdaApp.js');
 
+before(function()  {
+    // install built-in modules
+    lamda.init();
+});
+
+
 describe('Test syntax...', function() {
     it('evaluate constants', function() {
         var  result = lamda.apply('', 'Hello World');
@@ -53,14 +59,14 @@ describe('Test syntax...', function() {
         expr = {
             name: {add:
                 {
-                    _input: 'Lennon',
-                    _expr: 'John '
+                    _input: 'John',
+                    _expr: ' Lennon'
                 }
             },
             path: {add:
                 {
-                    _input: '/lib',
-                    _expr: '/usr'
+                    _input: '/usr',
+                    _expr: '/lib'
                 }
             }
         };

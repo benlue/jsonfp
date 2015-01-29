@@ -1,3 +1,8 @@
+0.0.6
+=====
++ A lot more operators are added and built-in operators are grouped into 'arithmetic', 'arrays', 'collections' and 'comparators' modules.
++ An operator can specify if JSON-FP should evaluate its option or not. With such a specification, JSON-FP developers could omit the 'def' operator and make JSON-FP more succint.
+
 0.0.5
 =====
 + Added promise support. With the new feature, a JSON-FP program can intake promised input. Also, if you add customized JSON-FP operators (transformations) whose output is a promise, JSON-FP can handle them properly.

@@ -9,6 +9,9 @@ var  sampleList = [
      sampleCtx = {};
 
 before(function()  {
+    // install built-in modules
+    lamda.init();
+
     // add customized methods (functions)
     lamda.addMethod('data', doData);
     lamda.addMethod('promise', doPromise);
@@ -21,9 +24,7 @@ describe('JSON-fp programming...', function() {
         //    return  pick(page, 'title');
         // });
         var  p = {
-            map: {
-                def: {pick: 'title'}
-            }
+            map: {pick: 'title'}
         };
 
         var  result = lamda.apply( sampleCtx, sampleList, p );
@@ -43,20 +44,18 @@ describe('JSON-fp programming...', function() {
         //    return page;
         // });
         var  p = {map:
-                {def:
-                    {merge:
-                        {tagList:
-                            {chain: [
-                                {
-                                    data: {
-                                        api: "pageTag/list",
-                                        option: {page_id: '$in.page_id'}
-                                    }
-                                },
-                                {take: '$showTag'},
-                                {flatten: 'tword'}
-                                ]
-                            }
+                {merge:
+                    {tagList:
+                        {chain: [
+                            {
+                                data: {
+                                    api: "pageTag/list",
+                                    option: {page_id: '$in.page_id'}
+                                }
+                            },
+                            {take: '$showTag'},
+                            {flatten: 'tword'}
+                            ]
                         }
                     }
                 }
@@ -85,22 +84,20 @@ describe('JSON-fp programming...', function() {
         var p = {chain:
             [
                 {map:
-                    {def:
-                        {merge:
-                            {tagList:
-                                {chain:
-                                    [
-                                        {
-                                            data: {
-                                                api: 'pageTag/list',
-                                                option: {page_id: '$in.page_id'}
-                                            }
-                                        },
-                                        {
-                                            flatten: 'tword'
+                    {merge:
+                        {tagList:
+                            {chain:
+                                [
+                                    {
+                                        data: {
+                                            api: 'pageTag/list',
+                                            option: {page_id: '$in.page_id'}
                                         }
-                                    ]
-                                }
+                                    },
+                                    {
+                                        flatten: 'tword'
+                                    }
+                                ]
                             }
                         }
                     }
@@ -131,15 +128,42 @@ describe('JSON-fp programming...', function() {
                         expr: ['/Person/query/', 'x']
                     }
                 },
-                {reduce:
-                    {def:
-                        {add: '$accumulator'}
-                    }
-                }
+                {reduce: {add: '$reduceValue'}}
              ]},
              result = lamda.apply(3, p);
         //console.log('result is: %s', result);
         assert.equal( result, '/Person/query/3', 'x not converted to 3');
+    });
+
+    it('test object query', function() {
+        // this sample program will find out who is working on the 'jsonfp' project and 
+        // is under age 30.
+        var  data = [
+            {name: 'John', project: 'jsonfp', age: 23},
+            {name: 'David', project: 'newsql', age: 42},
+            {name: 'Kate', project: 'jsonfp', age: 18}
+        ],
+        p = {filter: 
+                {chain: [
+                    {project:
+                        {chain: [
+                                {'getter': 'project'},
+                                {'==': 'jsonfp'}
+                        ]},
+                     age:
+                        {chain: [
+                            {'getter': 'age'},
+                            {'<': 30}
+                        ]}
+                    },
+                    {'and': ['project', 'age']}
+                ]}
+        },
+        result = lamda.apply( data, p );
+        //console.log( JSON.stringify(result, null, 4) );
+        assert.equal(result.length, 2, '2 elements');
+        assert.equal(result[0].name, 'John', 'first match is John');
+        assert.equal(result[1].name, 'Kate', 'second match is Kate');
     });
 });
 
@@ -187,7 +211,7 @@ describe('Hanlding promise...', function(done) {
     });
 
     it('Simple promise with array input', function(done) {
-        var  p = {map: {def: {promise: 2}}},
+        var  p = {map: {promise: 2}},
              result = lamda.apply([1, 2, 3], p);
         result.then(function(v) {
             assert.equal(v[0], 3, 'elem #1 is 3');
