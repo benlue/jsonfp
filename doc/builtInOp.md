@@ -8,7 +8,7 @@ JSON-FP comes with built-in operators. These operators are categorized into 5 di
   + [convert](#convert)
   + [eval](#eval)
   + [map](#map)
-+ [Arithmatic](#arithmatic)
++ [Arithmetic](#arithmetic)
   + [add](#add)
   + [subtract](#subtract)
   + [multiply](#multiply)
@@ -63,8 +63,8 @@ This operator will iterate through every property of its _option_ and try to eva
 ###map
 This operator will take each element of the input array and apply it to the given JSON-FP expression.
 
-<a name="arithmatic"></a>
-## Arithmatic
+<a name="arithmetic"></a>
+## Arithmetic
 
 <a name="add"></a>
 ###add

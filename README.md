@@ -62,7 +62,7 @@ _program_ should be a JSON-FP program and _input_ can be any value. _Context_ is
 ####jsonfp.init(options)
 Before you evaluate any JSON-FP expressions, you should call jsonfp.init() to  preload the built-in operators. You can also preload just part of the built-in operators by specifying the needed operators in the _options_ parameter. For example:
 
-    jsonfp.init(['arithmatic', 'arrays', 'collections']);
+    jsonfp.init(['arithmetic', 'arrays', 'collections']);
     
 The above example does not load "comparators".
 
