@@ -112,7 +112,7 @@ Note that this time we provide a context variable (ctx) to supply the first name
 ### Operators
 What operators are available in a JSON-FP runtime will decide its capabilities, and that can be fully customized. Customizing the set of supported operators is a very important feature because it allows a server (or any JSON-FP runtime) to gauge what capacity it's willing to offer.
 
-The current implementation comes with more than 30 operators. To view the list and usage of these built-in operators, please refre to this [page](https://github.com) for details.
+The current implementation comes with more than 30 operators. To view the list and usage of these built-in operators, please refre to this [page](https://github.com/benlue/jsonfp/blob/master/doc/builtInOp.md) for details.
 
 So if you need some functions not supported by the built-in operators, you can simply add your own! Below is an example:
 
