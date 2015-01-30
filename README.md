@@ -1,7 +1,7 @@
 JSON-FP
 =======
 
-In a decentralized computing environment, it will be a better practice to pass programming codes to various machines to execute (and then gather the results) when the application is dealing with huge amount of data. However, how can machines of various configurations understand each other? Also, the "moving code, least moving data" policy may work better with functional programming than imperative programming.
+In a decentralized computing environment, it's a better practice to pass programming codes to various machines to execute (and then gather the results) when the application is dealing with huge amount of data. However, how can machines of various configurations understand each other? Also, the "moving code, least moving data" policy may work better with functional programming than imperative programming.
 
 Those questions/issues lead to the idea of doing functional programming in JSON. If programs can be coded in JSON, they can be easily shipped around and understood by machines of vaious settings. Combining JSON and functional programming also makes security issues easier to track or manage.
 
