@@ -33,7 +33,7 @@ The built-in operators have grown from 10+ to more than 30 operators in the curr
 
 <a name="started"></a>
 ## Getting started
-If you really like to dive in, test files under the _test_ directory is a good place to start. Those test cases are also good examples.
+If you really like to dive in, you can check out the [example project](https://github.com/benlue/jsonfp-examples). In addition to that, test files under the _test_ directory is also a good place to start:
 
 + **[testLamda.js](https://github.com/benlue/jsonfp/blob/master/test/testLamda.js)**: test cases of real application scenarios. Alpha-conversion and meta programming test cases can also be found here.
 
@@ -173,4 +173,5 @@ If you specify the _defOption_ property as true when adding methods to the JSON-
 Since the format of JSON-FP is so simple, it would not be too difficult to make programs to produce JSON-FP programs. To make that even easier, the **convert** operator is added to support variable renaming or subsititution. The idea is based on alpha-conversion of lamda calculus.
 
 There is a simple example in [testLamda.js](https://github.com/benlue/jsonfp/blob/master/test/testLamda.js) if you're interested.
+
 
