@@ -6,19 +6,25 @@ In a decentralized computing environment, it will be a better practice to pass p
 Those questions/issues lead to the idea of doing functional programming in JSON. If programs can be coded in JSON, they can be easily shipped around and understood by machines of vaious settings. Combining JSON and functional programming also makes security issues easier to track or manage.
 
 JSON-FP is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-FP is trying to achieve.
+    
+## What's new
+The built-in operators have grown from 10+ to more than 30 operators in the current release (0.0.6). For details about what's new in the current release, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
 
 ## Install
 
     npm install jsonfp
-    
-## What's new
-The built-in operators have grown from 10+ to more than 30 operators in the current release (0.0.6). For details about what's new in the current release, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
 
 ## Contents
 
 + [Getting started](#started)
   + [Run programs](#run)
-+ [Format](#format)
+  + [API](#api)
+    + [jsonfp.init()](#jfpInit)
+    + [jsonfp.apply()](#jfpApply)
+    + [jsonfp.isExpression()](#isExp)
+    + [jsonfp.addMethod()](#jfpAddMethod)
+    + [jsonfp.removeMethod()](#jfpRemoveMethod)
++ [JSON-FP expression](#format)
   + [Expression input](#input)
   + [Evaluation](#evaluation)
   + [Variables](#variables)
@@ -49,20 +55,50 @@ Below is how you can run or evaluate a JSON-FP program:
     
 _program_ should be a JSON-FP program and _input_ can be any value. _Context_ is a plain object to act as an additional data channel to a program.
 
+<a name="api"></a>
+###API
+
+<a name="jfpInit"></a>
+####jsonfp.init(options)
+Before you evaluate any JSON-FP expressions, you should call jsonfp.init() to  preload the built-in operators. You can also preload just part of the built-in operators by specifying the needed operators in the _options_ parameter. For example:
+
+    jsonfp.init(['arithmatic', 'arrays', 'collections']);
+    
+The above example does not load "comparators".
+
+<a name="jfpApply"></a>
+####jsonfp.apply(ctx, input, expr)
+Evaluates a JSON-FP express where _ctx_ is a context variable, _input_ will be fed to the expression, and _expr_ is the JSON-FP expression to be evaluated. The _ctx_ parameter is optional.
+
+<a name="jfpIsExp"></a>
+####jsonfp.isExpression(expr)
+Checks to see if _expr_ is a valid JSON-FP expression.
+
+<a name="jfpAddMethod"></a>
+####jsonfp.addMethod(name, func)
+Adds an customized operator to the JSON-FP runtime. _name_ is the operator name, and _func_ can be a Javascript function or a plain object with the following properties:
+
++ op: a Javascript function to carry out the operator functions.
++ defOption: if true, the expression option will not be evaluated before the expression is evaluated. For operators such as "map" or "filter" which will treat the option as a JSON-FP expression, this property should be set to true.
+
+<a name="jfpRemoveMethod"></a>
+####jsonfp.removeMethod(name)
+Removes an operator from a JSON-FP runtime.
+
 
 <a name="format"></a>
-## Format
+## JSON-FP expression
 A JSON-FP expression is a JSON object with a single property. The property key is the "operator" which works on the input data while the property value specifies options to that operator. So a JSON-FP expression is as simple as:
 
     {op: options}
 
 The interesting part is that _options_ can be yet another JSON-FP expression. A typical example would be the case of applying the "map" operator. Assuming we have a list of documents and we want to remove all properties but the title property for each document. Below is what you can do with JSON-FP:
 
-    "map": {
-    	def: {"pick": "title"}
+    {"map":
+    	{"pick": "title"}
     }
 
-By repeatedly substituting options with another JSON-FP expression, an expression as simple as {op: options} can turn into a really sophisticated application.
+By repeatedly substituting expression value with another JSON-FP expression, an expression as simple as {op: options} can turn into a really sophisticated application.
 
 <a name="input"></a>
 ### Expression input

@@ -126,7 +126,7 @@ This operator returns the first _n_ elements of the input array. _n_ is specifie
 
 <a name="union"></a>
 ###union
-Output an array of unique values from the _input_ and _option_ arrays. Note that comparision is done by identity equality.
+Output an array of unique values from the _input_ and _option_ arrays.
 
 <a name="zipObject"></a>
 ###zipObject
@@ -163,7 +163,18 @@ This operator will recursively merge the option object into the input object.
 
 <a name="omit"></a>
 ###omit
-Creates an object by removing properties specified by _option_ from the _input_ object.
+Creates an object by removing properties specified by _option_ from the _input_ object. Besides being a string value, _option_ can also be a JSON-FP  expression. If _option_ is a JSON-FP expression, the omit operator will iterate every key/value pair of the input object, and send the pair as input to the JSON-FP expression. Below is an example:
+
+    var  data = {name: 'David', project: 'newsql', age: 42},
+         expr = {omit:
+                    {chain: [
+                        {getter: 'key'},
+                        {'==': 'project'}
+                    ]}
+                },
+         result = jsonfp.apply( data, expr );
+         
+In the above example, the {chain: ...} expression will be invoked three times with each time receving input as {key: 'name', value: 'David'}, {key: 'project', value: 'newsql'} and {key: 'age', value: 42} respectively. The execution result will be {name: 'David', age: 42}.
 
 <a name="pick"></a>
 ###pick
