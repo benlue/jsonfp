@@ -1,7 +1,7 @@
 0.0.6
 =====
-+ A lot more operators are added and built-in operators are grouped into 'arithmetic', 'arrays', 'collections' and 'comparators' modules.
-+ An operator can specify if JSON-FP should evaluate its option or not. With such a specification, JSON-FP developers could omit the 'def' operator and make JSON-FP more succint.
++ Built-in operators have been substantially expanded and those operators are grouped into 'arithmetic', 'arrays', 'collections' and 'comparators' modules.
++ An operator can specify if JSON-FP should evaluate its expression value or not. With such a feature, JSON-FP developers could omit the 'def' operator and make JSON-FP expressions more succint.
 
 0.0.5
 =====
