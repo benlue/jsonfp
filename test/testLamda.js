@@ -198,16 +198,17 @@ describe('JSON-fp meta programming...', function() {
 });
 
 
-describe('Hanlding promise...', function(done) {
+describe('Hanlding promise/callback...', function(done) {
     it('Simple promise', function(done) {
         var  p = {promise: 2},
              result = lamda.apply(1, p);
 
         result.then(function(v) {
+            //console.log('result:\n%s', JSON.stringify(result, null, 4));
             assert.equal(v, 3, 'the result is 3');
-            done();
+            done();v
         });
-        //console.log('result:\n%s', JSON.stringify(result, null, 4));
+        
     });
 
     it('Simple promise with array input', function(done) {
@@ -219,7 +220,35 @@ describe('Hanlding promise...', function(done) {
             assert.equal(v[2], 5, 'elem #3 is 5');
             done();
         });
-        //console.log('result:\n%s', JSON.stringify(result, null, 4));
+    });
+
+    it('Simple callback', function(done) {
+        var  p = {promise: 2};
+
+        lamda.apply(1, p, function(err, v) {
+            assert.equal(v, 3, 'the result is 3');
+            done();
+        });
+    });
+
+    it('Simple callback with array input', function(done) {
+        var  p = {map: {promise: 2}};
+
+        lamda.apply([1, 2, 3], p, function(err, v) {
+            assert.equal(v[0], 3, 'elem #1 is 3');
+            assert.equal(v[1], 4, 'elem #2 is 4');
+            assert.equal(v[2], 5, 'elem #3 is 5');
+            done();
+        });
+    });
+
+    it('No blocked callback', function(done) {
+        var  p = {max: 3};
+
+        lamda.apply(8, p, function(err, result) {
+            assert.equal(result, 8, 'max of 3 and 8 is 8');
+            done();
+        });
     });
 });
 
@@ -249,6 +278,8 @@ function  doData(input, p)  {
 
 function  doPromise(input, v)  {
     return  new Promise(function(resolve, reject) {
-        resolve(input + v);
+        setTimeout(function() {
+            resolve(input + v);
+        }, 20);
     });
 };

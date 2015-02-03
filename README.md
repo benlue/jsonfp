@@ -8,7 +8,7 @@ Those questions/issues lead to the idea of doing functional programming in JSON.
 JSON-FP is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-FP is trying to achieve.
     
 ## What's new
-The built-in operators have grown from 10+ to more than 30 operators in the current release (0.0.6). For details about what's new in the current release, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
+The built-in operators have grown from 10+ to more than 30 operators in the current release (0.0.6). Developers have an option to use either promise or callback to deal with asynchronous calls (0.0.7). For details about what's new in the current release, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
 
 ## Install
 
@@ -24,6 +24,7 @@ The built-in operators have grown from 10+ to more than 30 operators in the curr
     + [jsonfp.isExpression()](#isExp)
     + [jsonfp.addMethod()](#jfpAddMethod)
     + [jsonfp.removeMethod()](#jfpRemoveMethod)
+  + [Promise or callback](#proCb)
 + [JSON-FP expression](#format)
   + [Expression input](#input)
   + [Evaluation](#evaluation)
@@ -56,10 +57,10 @@ Below is how you can run or evaluate a JSON-FP program:
 _program_ should be a JSON-FP program and _input_ can be any value. _Context_ is a plain object to act as an additional data channel to a program.
 
 <a name="api"></a>
-###API
+### API
 
 <a name="jfpInit"></a>
-####jsonfp.init(options)
+#### jsonfp.init(options)
 Before you evaluate any JSON-FP expressions, you should call jsonfp.init() to  preload the built-in operators. You can also preload just part of the built-in operators by specifying the needed operators in the _options_ parameter. For example:
 
     jsonfp.init(['arithmetic', 'arrays', 'collections']);
@@ -67,25 +68,41 @@ Before you evaluate any JSON-FP expressions, you should call jsonfp.init() to  p
 The above example does not load "comparators".
 
 <a name="jfpApply"></a>
-####jsonfp.apply(ctx, input, expr)
-Evaluates a JSON-FP express where _ctx_ is a context variable, _input_ will be fed to the expression, and _expr_ is the JSON-FP expression to be evaluated. The _ctx_ parameter is optional.
+#### jsonfp.apply(ctx, input, expr, cb)
+Evaluates a JSON-FP express and return the result. If any JSON-FP expression is performed asynchronously, the return value will be a promise. If you prefer the callback style, you can put the callback function as the 4th parameter to the function call. _cb(err, value)_ will take an error object (if any) and the result as the second parameter. Note that if invoked with a    callback function, _jsonfp.apply()_ will no longer return a value.
+
+Parameter _ctx_ is a context variable, _input_ will be fed to the expression, and _expr_ is the JSON-FP expression to be evaluated. The _ctx_ parameter is optional.
 
 <a name="jfpIsExp"></a>
-####jsonfp.isExpression(expr)
+#### jsonfp.isExpression(expr)
 Checks to see if _expr_ is a valid JSON-FP expression.
 
 <a name="jfpAddMethod"></a>
-####jsonfp.addMethod(name, func)
+#### jsonfp.addMethod(name, func)
 Adds an customized operator to the JSON-FP runtime. _name_ is the operator name, and _func_ can be a Javascript function or a plain object with the following properties:
 
 + op: a Javascript function to carry out the operator functions.
 + defOption: if true, the expression option will not be evaluated before the expression is evaluated. For operators such as "map" or "filter" which will treat the option as a JSON-FP expression, this property should be set to true.
 
 <a name="jfpRemoveMethod"></a>
-####jsonfp.removeMethod(name)
+#### jsonfp.removeMethod(name)
 Removes an operator from a JSON-FP runtime.
 
+<a name="proCb"></a>
+### Promise or callback
+To use promise or callback to handle asynchronous calls is more about preference than right or wrong. JSON-FP supports both styles. When you evaluate a JSON-FP expression, you can either use the promise style:
 
+    jsonfp.apply(input, expr).then(function(value) {
+        // value is the result
+    });
+
+or the callback style:
+
+    jsonfp.apply(input, expr, function(err, value) {
+        // value is the result
+    });
+    
+    
 <a name="format"></a>
 ## JSON-FP expression
 A JSON-FP expression is a JSON object with a single property. The property key is the "operator" which works on the input data while the property value specifies options to that operator. So a JSON-FP expression is as simple as:
