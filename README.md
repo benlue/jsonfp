@@ -69,13 +69,13 @@ The above example does not load "comparators".
 
 <a name="jfpApply"></a>
 #### jsonfp.apply(ctx, input, expr, cb)
-Evaluates a JSON-FP express and returns the result. If any JSON-FP expression is performed asynchronously, the return value will be a promise. If you prefer the callback style, you can put the callback function as the 4th parameter to the function call. _cb(err, value)_ will take an error object (if any) and the result as the second parameter. Note that if invoked with a callback function, _jsonfp.apply()_ will no longer return a value.
+Evaluates a JSON-FP expression and returns the result. If any JSON-FP expression is performed asynchronously, the return value will be a promise. If you prefer the callback style, you can put the callback function as the 4th parameter to the function call. _cb(err, value)_ is an optional callback function which will take an error object (if any) and the result as the second parameter. Note that if invoked with a callback function, _jsonfp.apply()_ will no longer return a value.
 
 Parameter _ctx_ is a context variable, _input_ will be fed to the expression, and _expr_ is the JSON-FP expression to be evaluated. The _ctx_ parameter is optional.
 
 <a name="jfpIsExp"></a>
 #### jsonfp.isExpression(expr)
-Checks to see if _expr_ is a valid JSON-FP expression.
+Checks to see if _expr_ is a evaluable JSON-FP expression.
 
 <a name="jfpAddMethod"></a>
 #### jsonfp.addMethod(name, func)
