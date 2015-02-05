@@ -43,7 +43,7 @@ For details about what's new in the current release, please check the [release n
 ## Getting started
 If you really like to dive in, you can check out the [example project](https://github.com/benlue/jsonfp-examples). In addition to that, test files under the _test_ directory is also a good place to start:
 
-+ **[testLamda.js](https://github.com/benlue/jsonfp/blob/master/test/testLamda.js)**: test cases of real application scenarios. Alpha-conversion and meta programming test cases can also be found here.
++ **[testLamda.js](https://github.com/benlue/jsonfp/blob/master/test/testLamda.js)**: testing some of the real application test cases. Alpha-conversion and meta programming test cases can also be found here.
 
 + **[testOp.js](https://github.com/benlue/jsonfp/blob/master/test/testOp.js)**: unit tests for operators.
 
