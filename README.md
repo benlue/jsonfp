@@ -13,7 +13,7 @@ JSON-FP is part of an attempt to make data freely and easily accessed, distribut
 
 + Developers have an option to use either promise or callback to deal with asynchronous calls (0.0.7). 
 
-+ The **chain** operator is frequently used in a JSON-FP program. To make it more intuitive and readable, you can now use '->' in place of 'chain'.
++ The **chain** operator is frequently used in a JSON-FP program. To make it more intuitive and readable, you can now use '->' in place of 'chain' (0.0.8).
 
 For details about what's new in the current release, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
 
@@ -47,7 +47,7 @@ If you really like to dive in, you can check out the [example project](https://g
 
 + **[testOp.js](https://github.com/benlue/jsonfp/blob/master/test/testOp.js)**: unit tests for operators.
 
-+ **[testSyntax](https://github.com/benlue/jsonfp/blob/master/test/testSyntax.js).js**: how variables, objects and arrays are evaluated.
++ **[testSyntax.js](https://github.com/benlue/jsonfp/blob/master/test/testSyntax.js)**: how variables, objects and arrays are evaluated.
 
 <a name="run"></a>
 ### Run programs
@@ -65,7 +65,9 @@ _program_ should be a JSON-FP program and _input_ can be any value. _Context_ is
 
 <a name="proCb"></a>
 ### Promise or callback
-To use promise or callback to handle asynchronous calls is more about preference than right or wrong. JSON-FP supports both styles. When you evaluate a JSON-FP expression, you can either use the promise style:
+Built-in operators of the current implementation all will do their jobs synchronously. However, if you add your own customized operators and they would do things asynchronously, those asynchronous operators should return a promise to JSON-FP. JSON-FP know how to deal with promise.
+
+JSON-FP supports both promise ad callbacks to deal with those asynchronous scenarios. In other words, if you expect the computation of your JSON-FP expression will be done asynchroously, you can either use the promise style:
 
     jsonfp.apply(input, expr).then(function(value) {
         // value is the result
