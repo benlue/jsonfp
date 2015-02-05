@@ -1,3 +1,8 @@
+## 0.0.8
+
++ '->' is an alias of the 'chain' operator, it that makes things more readable.
++ The _reduce_ operator now also has a shorter format.
+
 ## 0.0.7
 
 + Allowed expression option to be null.

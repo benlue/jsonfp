@@ -34,6 +34,62 @@ describe('JSON-fp programming...', function() {
         assert(!result[0].psnID, 'psnID should be removed');
     });
 
+    it('test object query', function() {
+        // this sample program will find out who is working on the 'jsonfp' project and 
+        // is under age 30.
+        var  data = [
+            {name: 'John', project: 'jsonfp', age: 23},
+            {name: 'David', project: 'newsql', age: 42},
+            {name: 'Kate', project: 'jsonfp', age: 18}
+        ],
+        expr = {
+            filter: 
+                {chain: [
+                    {project:
+                        {chain: [
+                            {'getter': 'project'},
+                            {'==': 'jsonfp'}
+                        ]},
+                     age:
+                        {chain: [
+                            {'getter': 'age'},
+                            {'<': 30}
+                        ]}
+                    },
+                    {'and': ['project', 'age']}
+                ]}
+        },
+        result = lamda.apply( data, expr );
+        //console.log( JSON.stringify(result, null, 4) );
+        assert.equal(result.length, 2, '2 elements');
+        assert.equal(result[0].name, 'John', 'first match is John');
+        assert.equal(result[1].name, 'Kate', 'second match is Kate');
+
+        // or do it the other way
+        expr = {
+            filter: {
+                '->': [
+                    [
+                        {chain: [
+                            {'getter': 'project'},
+                            {'==': 'jsonfp'}
+                        ]},
+                        {'->': [
+                            {'getter': 'age'},
+                            {'<': 30}
+                        ]}
+                    ],
+                    {reduce: 'and'}
+                ]
+            }
+        };
+        result = lamda.apply( data, expr );
+        //console.log( JSON.stringify(result, null, 4) );
+        assert.equal(result.length, 2, '2 elements');
+        assert.equal(result[0].name, 'John', 'first match is John');
+        assert.equal(result[1].name, 'Kate', 'second match is Kate');
+    });
+
     it('add tags to each page in a list', function() {
         // the following program is equivalent to:
         // list.map(function(page) {
@@ -133,37 +189,6 @@ describe('JSON-fp programming...', function() {
              result = lamda.apply(3, p);
         //console.log('result is: %s', result);
         assert.equal( result, '/Person/query/3', 'x not converted to 3');
-    });
-
-    it('test object query', function() {
-        // this sample program will find out who is working on the 'jsonfp' project and 
-        // is under age 30.
-        var  data = [
-            {name: 'John', project: 'jsonfp', age: 23},
-            {name: 'David', project: 'newsql', age: 42},
-            {name: 'Kate', project: 'jsonfp', age: 18}
-        ],
-        p = {filter: 
-                {chain: [
-                    {project:
-                        {chain: [
-                                {'getter': 'project'},
-                                {'==': 'jsonfp'}
-                        ]},
-                     age:
-                        {chain: [
-                            {'getter': 'age'},
-                            {'<': 30}
-                        ]}
-                    },
-                    {'and': ['project', 'age']}
-                ]}
-        },
-        result = lamda.apply( data, p );
-        //console.log( JSON.stringify(result, null, 4) );
-        assert.equal(result.length, 2, '2 elements');
-        assert.equal(result[0].name, 'John', 'first match is John');
-        assert.equal(result[1].name, 'Kate', 'second match is Kate');
     });
 });
 
