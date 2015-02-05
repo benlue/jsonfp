@@ -67,7 +67,7 @@ _program_ should be a JSON-FP program and _input_ can be any value. _Context_ is
 ### Promise or callback
 Built-in operators of the current implementation all will do their jobs synchronously. However, if you add your own customized operators and they would do things asynchronously, those asynchronous operators should return a promise to JSON-FP. JSON-FP knows how to deal with promise.
 
-JSON-FP supports both promise ad callbacks to deal with those asynchronous situations. In other words, if you expect the computation of your JSON-FP expression will be done asynchroously, you can either use the promise style:
+JSON-FP supports both promise and callbacks to deal with those asynchronous situations. In other words, if you expect the computation of your JSON-FP expression will be done asynchroously, you can either use the promise style:
 
     jsonfp.apply(input, expr).then(function(value) {
         // value is the result
