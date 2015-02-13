@@ -1,11 +1,17 @@
+## 0.0.9
+
++ Added the [if](https://github.com/benlue/jsonfp/blob/master/doc/builtInOp.md#if) operator.
++ Allowed variable settings through the context variable.
++ Allowed expression option to be null.
+
 ## 0.0.8
 
-+ '->' is an alias of the 'chain' operator, it that makes things more readable.
-+ The _reduce_ operator now also has a shorter format.
++ '->' is an alias of the 'chain' operator, if that makes things more readable.
++ The _reduce_ operator now also has a shorter format. Check [builtinOp](https://github.com/benlue/jsonfp/blob/master/doc/builtInOp.md#reduce) for details.
 
 ## 0.0.7
 
-+ Allowed expression option to be null.
++ Allowed expression input to be null.
 + Besides promise, developers can also use callback to handle asynchronous calls.
 
 ## 0.0.6

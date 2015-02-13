@@ -3,8 +3,8 @@ var  assert = require('assert'),
      Promise = require('bluebird');
 
 var  sampleList = [
-            {title: 'A book', psnID: 24, page_id: 33},
-            {title: 'Bit Coin', psnID: 48, page_id: 88}
+            {title: 'UX Guide', psnID: 24, page_id: 33, price: 23.90},
+            {title: 'Bitcoin', psnID: 48, page_id: 88, price: 29.50}
             ],
      sampleCtx = {};
 
@@ -14,10 +14,11 @@ before(function()  {
 
     // add customized methods (functions)
     lamda.addMethod('data', doData);
+    lamda.addMethod('isBargin', doBarginPromised);
     lamda.addMethod('promise', doPromise);
 });
 
-describe('JSON-fp programming...', function() {
+describe('JSON-FP programming...', function() {
     it('map and pick', function() {
         // the following program is equivalent to:
         // list.map(function(page) {
@@ -30,7 +31,7 @@ describe('JSON-fp programming...', function() {
         var  result = lamda.apply( sampleCtx, sampleList, p );
         //console.log( JSON.stringify(result, null, 4) );
         assert.equal( result.length, 2, 'still have 2 items');
-        assert.equal( result[0].title, 'A book', 'title not match');
+        assert.equal( result[0].title, 'UX Guide', 'title not match');
         assert(!result[0].psnID, 'psnID should be removed');
     });
 
@@ -190,6 +191,34 @@ describe('JSON-fp programming...', function() {
         //console.log('result is: %s', result);
         assert.equal( result, '/Person/query/3', 'x not converted to 3');
     });
+
+    it('if', function()  {
+        // The following code will find out which books are selling more than $25
+        var  expr = {
+                '->': [
+                    {map: 
+                        {if:
+                            [
+                                {'->':
+                                    [
+                                        {getter: 'price'},
+                                        {'>': 25}
+                                    ]
+                                },
+                                {getter: 'title'},
+                                ''
+                            ]
+                        }
+                    },
+                    {compact: null}
+                ]
+            };
+
+        var  result = lamda.apply(sampleList, expr);
+        //console.log('---- result ----\n%s', JSON.stringify(result, null, 4));
+        assert.equal(result.length, 1, 'One match');
+        assert.equal(result[0], 'Bitcoin', 'Title is Bitcoin');
+    });
 });
 
 
@@ -217,7 +246,7 @@ describe('JSON-fp meta programming...', function() {
 
         //console.log('result is: %s', JSON.stringify(result, null, 4));
         assert.equal( result.length, 2, 'still have 2 items');
-        assert.equal( result[0].title, 'A book', 'title not match');
+        assert.equal( result[0].title, 'UX Guide', 'title not match');
         assert(!result[0].psnID, 'psnID should be removed');
     });
 });
@@ -275,6 +304,39 @@ describe('Hanlding promise/callback...', function(done) {
             done();
         });
     });
+
+    it('if condition is promised', function(done)  {
+        // The following code will find out which books are selling more than $25
+        var  expr = {
+                '->': [
+                    {map: 
+                        {if:
+                            [
+                                {'->':
+                                    [
+                                        {getter: 'price'},
+                                        {isBargin: 25}
+                                    ]
+                                },
+                                {getter: 'title'},
+                                ''
+                            ]
+                        }
+                    },
+                    {compact: null}
+                ]
+            };
+
+        var  result = lamda.apply(sampleList, expr);
+        result.then(function(books) {
+            //console.log('---- result ----\n%s', JSON.stringify(books, null, 4));
+            assert.equal(books.length, 1, 'One match');
+            assert.equal(books[0], 'UX Guide', 'Title is UX Guide');
+            done();
+        });
+        
+        
+    });
 });
 
 
@@ -305,6 +367,15 @@ function  doPromise(input, v)  {
     return  new Promise(function(resolve, reject) {
         setTimeout(function() {
             resolve(input + v);
+        }, 20);
+    });
+};
+
+
+function  doBarginPromised(input, v)  {
+    return  new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve(input < v);
         }, 20);
     });
 };

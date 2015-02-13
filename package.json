@@ -1,6 +1,6 @@
 {
   "name": "jsonfp",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Functional programming in JSON.",
   "engines": "0.10.21",
   "main": "lib/lamdaApp.js",

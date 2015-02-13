@@ -9,11 +9,11 @@ JSON-FP is part of an attempt to make data freely and easily accessed, distribut
     
 ## What's new
 
-+ The built-in operators have grown from 10+ to more than 30 operators in the recent release (0.0.6).
++ The **if** operator is added to the language even though you can achieve the same effect without it. Also temporary results can be saved to the context variable as side effects. Check [here](#setVar) for further explanations on variable settings (0.0.9).
+
++ The **chain** operator is so frequently used in a JSON-FP program. To make it more intuitive and readable, you can now use '->' in place of 'chain' (0.0.8).
 
 + Developers have an option to use either promise or callback to deal with asynchronous calls (0.0.7). 
-
-+ The **chain** operator is frequently used in a JSON-FP program. To make it more intuitive and readable, you can now use '->' in place of 'chain' (0.0.8).
 
 For details about what's new in the current release, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
 
@@ -30,6 +30,7 @@ For details about what's new in the current release, please check the [release n
   + [Expression input](#input)
   + [Evaluation](#evaluation)
   + [Variables](#variables)
+    + [Setting variables](#setVar)
   + [Operators](#operators)
   + [API](#api)
     + [jsonfp.init()](#jfpInit)
@@ -48,6 +49,8 @@ If you really like to dive in, you can check out the [example project](https://g
 + **[testOp.js](https://github.com/benlue/jsonfp/blob/master/test/testOp.js)**: unit tests for operators.
 
 + **[testSyntax.js](https://github.com/benlue/jsonfp/blob/master/test/testSyntax.js)**: how variables, objects and arrays are evaluated.
+
++ **[testVariables.js](https://github.com/benlue/jsonfp/blob/master/test/testVariables.js)**: how to set and use variables.
 
 <a name="run"></a>
 ### Run programs
@@ -125,19 +128,70 @@ This time JSON-FP will find something to work on and {name: 'David Cooper'} will
 
 <a name="variables"></a>
 ### Variables
-You can refer to variables in a JSON-FP expression. Since we do not want to break JSON parsing, JSON-FP variables are expressed as a string with leading a '$'. For example, '$title' or '$in.id'.
+It's possible to refer to variables in a JSON-FP expression. They are expressed as a string with a leading '$' sign. For example, '$title' and '$in.id' are all valid variables. The syntax of JSON-FP variables is defined as such because we do not want to break the JSON syntax.
 
-Input to an JSON-FP expression can be referred to with the '$in' variable. Assuming the input is a plain object with a 'title' property, then you can refe to that title property using '$in.title'.
+Input to an JSON-FP expression can be referred as '$in'. If input is a plain object with a 'title' property, you can refe to that title property as '$in.title'.
 
-Besides input, you can put all other variables in the context variable and refer to them. Below is an exmaple showing how you can use context variables:
+Besides input, you can put all other variables in the context variable. Below is an exmaple showing you how to use context variables:
 
     var  expr = {name: {add: '$firstName'}},
     	 ctx = {firstName: 'David '},
     	 result = jsonfp.apply(ctx, 'Jones', expr);
+    	 
+    // Below should print out 'David Jones'
     console.log( JSON.stringify(result) );
 
-Note that this time we provide a context variable (ctx) to supply the first name to the expression. The result will be printed out on console as {name: 'David Jones'}.
+Note that in the above example we provide a context variable (ctx) to supply the first name to the expression. The result will be printed out on console as {name: 'David Jones'}.
 
+<a name="setVar"></a>
+#### Setting variables
+A JSON-FP expression can unfold itself as a series (or a tree of series) of expressions. Input to the expression will water fall through or be transformed by those series of expressions. Sometimes we need to keep the intermediate results coming off expressions and recall them when necessary. To do so, the intermediate results should be able to be saved.
+
+You ca save the intermediate results in the context variable like the following:
+
+    {
+        $name: {getter: 'name'}
+    }
+
+That will pick up the _name_ property of input and store it into the context variable. The saved value will be visible to successive expressions. For example:
+
+    var expr = 
+    {eval:
+        {
+            $name: {getter: 'name'},
+            $hobby: {getter: 'hobby'},
+            response: {
+                _input: ['$name', ' likes ', '$hobby'],
+				_expr: {reduce: 'add'}
+            }
+        }
+    };
+    
+will save the name and hobby of a person to the _'$name'_ and _'$hobby'_ variables respectively. However, if you do:
+
+    var expr = 
+    {eval:
+        {
+
+            response: {
+                _input: ['$name', ' likes ', '$hobby'],
+				_expr: {reduce: 'add'}
+            },
+            $name: {getter: 'name'},
+            $hobby: {getter: 'hobby'}
+        }
+    };
+
+You'll **not** get the expected result.
+
+Also note that, variables will not show up in results. The above example if done correctly will generate the result as
+
+    {
+        response: 'David likes meditation'
+    }
+    
+You won't have _'$name'_ and _'$hobby'_ as part of the return value.
+    
 <a name="operators"></a>
 ### Operators
 What operators are available in a JSON-FP runtime will decide its capabilities, and that can be fully customized. Customizing the set of supported operators is a very important feature because it allows a server (or any JSON-FP runtime) to gauge what capacity it's willing to offer.

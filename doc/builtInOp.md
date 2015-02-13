@@ -7,6 +7,7 @@ JSON-FP comes with built-in operators. These operators are categorized into 5 di
   + [chain](#chain)
   + [convert](#convert)
   + [eval](#eval)
+  + [if](#if)
   + [map](#map)
 + [Arithmetic](#arithmetic)
   + [add](#add)
@@ -18,6 +19,7 @@ JSON-FP comes with built-in operators. These operators are categorized into 5 di
   + [and](#and)
   + [or](#or)
 + [Arrays](#arrays)
+  + [compact](#compact)
   + [difference](#difference)
   + [flatten](#flatten)
   + [intersection](#intersection)
@@ -73,6 +75,12 @@ The convert operator can be used to do variable substitution (this is actually J
 ### eval
 This operator will iterate through every property of its _option_ and try to evaluate each property as a JSON-FP expression. Note that JSON-FP will automatically evaluate _option_ so the **eval** operator is not needed in most cases. It will be used mostly in meta-programming. For example, evaluating a JSON-FP expression produced by alpha-conversion like: _{eval: {convert: {...}}_.
 
+<a name="if"></a>
+### if
+indicates a conditional statement as described in the option expression. _option_ should be an array with at least two elements. The first element (JSON-FP expression) in the array is the conditional expression. The second element (JSON-FP expression) is the expression to be evaluated when the condition is true, and the third element (JSON-FP expression) will be evaluated when the condition is false. The third element can be missing if the **else** statement is not needed.
+
+When the **else** expression is not needed, the input will be the return value of this **if** expression.
+
 <a name="map"></a>
 ### map
 This operator will take each element of the input array and apply it to the given JSON-FP expression.
@@ -121,6 +129,10 @@ This operator will return the logical "or" of _input_ and _option_. Similar to t
 
 <a name="arrays"></a>
 ## Arrays
+
+<a name="compact"></a>
+### compact
+Returns an array with false values (false, null, 0 or '') removed.
 
 <a name="difference"></a>
 ### difference
