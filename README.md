@@ -184,7 +184,7 @@ will save the name and hobby of a person to the _'$name'_ and _'$hobby'_ variabl
 
 You'll **not** get the expected result.
 
-Also note that, variables will not show up in results. The above example if done correctly will generate the result as
+Also note that, variables will not show up in results. The above example if done correctly will generate the result as (assuming input is {name: 'David', hobby: 'meditation'})
 
     {
         response: 'David likes meditation'

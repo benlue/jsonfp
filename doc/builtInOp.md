@@ -77,7 +77,7 @@ This operator will iterate through every property of its _option_ and try to eva
 
 <a name="if"></a>
 ### if
-indicates a conditional statement as described in the option expression. _option_ should be an array with at least two elements. The first element (JSON-FP expression) in the array is the conditional expression. The second element (JSON-FP expression) is the expression to be evaluated when the condition is true, and the third element (JSON-FP expression) will be evaluated when the condition is false. The third element can be missing if the **else** statement is not needed.
+indicates a conditional statement as described in the option. _option_ should be an array with at least two elements. The first element (JSON-FP expression) in the array is the conditional expression. The second element (JSON-FP expression) is the expression to be evaluated when the condition is true, and the third element (JSON-FP expression) will be evaluated when the condition is false. The third element can be missing if the **else** statement is not needed.
 
 When the **else** expression is not needed, the input will be the return value of this **if** expression.
 
