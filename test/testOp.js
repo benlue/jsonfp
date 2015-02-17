@@ -2,10 +2,10 @@ var  assert = require('assert'),
      lamda = require('../lib/lamdaApp.js');
 
 describe('Test build-in operators...', function() {
-    it('convert', function() {
+    it('formula', function() {
         // alpha-conversion
         // case 1: expression is just a variable
-        var  p = {convert:
+        var  p = {formula:
                 {
                     var: 'e',
                     expr: 'e'
@@ -16,17 +16,17 @@ describe('Test build-in operators...', function() {
         assert.equal( result, 'Hello', 'it should become "Hello"');
 
         // case 2: expression is an object
-        p = {convert:
+        p = {formula:
             {
                 var: 'e',
                 expr: {map: 'e'}
             }
         };
         result = lamda.apply( {def: {pick: 'name'}}, p );
-        assert.equal(result[0].def.pick, 'name', 'pick names');
+        assert.equal(result.map.def.pick, 'name', 'pick names');
 
         // case 3: expression is an array
-        p = {convert:
+        p = {formula:
             {
                 var: 'e',
                 expr: [123, 'e', 'xyz', 'e']
@@ -35,6 +35,18 @@ describe('Test build-in operators...', function() {
         result = lamda.apply( 'Hello', p );
         assert.equal(result[1], 'Hello', 'elem #1 is hello');
         assert.equal(result[3], 'Hello', 'elem #3 is hello');
+
+        // case 4: multiple substitution
+        p = {formula:
+            {
+                var: ['x', 'y'],
+                expr: [123, 'x', 'xyz', 'y']
+            }
+        };
+
+        result = lamda.apply({x: 'Hello', y: 'world'}, p);
+        assert.equal(result[1], 'Hello', 'elem #1 is hello');
+        assert.equal(result[3], 'world', 'elem #3 is world');
     });
 
     it('difference', function() {

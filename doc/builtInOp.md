@@ -6,6 +6,7 @@ JSON-FP comes with built-in operators. These operators are categorized into 5 di
 + [Core](#core)
   + [chain](#chain)
   + [convert](#convert)
+  + [formula](#formula)
   + [eval](#eval)
   + [if](#if)
   + [map](#map)
@@ -69,7 +70,48 @@ is the same as
 
 <a name="convert"></a>
 ### convert
-The convert operator can be used to do variable substitution (this is actually JSON-FP's way of suppoting the alpha-conversion of lamda calculus). _option_ should be like {var: ..., expr: ...} where _var_ is the variable name and _expr_ is the expression to be converted.
+The convert operator can be used to perform variable substitutions (this is actually JSON-FP's way of suppoting the alpha-conversion in lamda calculus). The convert option has the following properties:
+
++ var: this property value contains the mapping between each substitutable variable and its value.
++ formula: the formula expression defined by the **formula** operator. See [below](#formula) about how to define a formula.
+
+Example:
+
+    var  f = {
+        formula: {
+            var: ['@prop'],
+            expr: {getter: '@prop'}
+        }
+    };
+
+    var  expr = {
+        convert: {
+            var: {'@prop': 'name'},
+            formula: f
+        }
+    },
+    input = {
+        name: 'John',
+        title: 'CEO'
+    },
+    result = jsonfp.apply(input, expr);
+
+The above example will take the _name_ property from the input object, so the result will be 'John'.
+
+<a name="formula"></a>
+### formula
+The formula operator can be used to define a formula. A formula is a JSON-FP expression with substitutable variables. By subsittuting variables in a JSON-FP expression, we'll be able to convert a formula into various expressions suitable for different tasks. A formula expression is usually in the following format:
+
+    {
+        formula: {
+            var: ['@prop1', '@prop2', ...],
+            expr: {
+                op1: '@prop1'
+            }
+        }
+    }
+
+That is the option to the formula operator is another JSON object with _var_ and _expr_ properties. The _var_ property should be an array of substitutable variable names. It's recommended to put a '@' sign in front of the variable name so we can easily identify them as substitutable variables. The _expr_ property is the JSON-FP expression containing variables to be substituted.
 
 <a name="eval"></a>
 ### eval

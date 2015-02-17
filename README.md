@@ -9,6 +9,8 @@ JSON-FP is part of an attempt to make data freely and easily accessed, distribut
     
 ## What's new
 
++ Added the **formula** operator for metaprogramming. Developers now can use the **formula** operator to define a JSON-FP formula and use the **convert** operator to apply a formula (0.1.0).
+
 + The **if** operator is added to the language even though you can achieve the same effect without it. Also temporary results can be saved to the context variable as side effects. Check [here](#setVar) for further explanations on variable settings (0.0.9).
 
 + The **chain** operator is so frequently used in a JSON-FP program. To make it more intuitive and readable, you can now use '->' in place of 'chain' (0.0.8).
@@ -250,8 +252,10 @@ Removes an operator from a JSON-FP runtime.
 
 <a name="meta"></a>
 ## Metaprogramming
-Since the format of JSON-FP is so simple, it would not be too difficult to make programs to produce JSON-FP programs. To make that even easier, the **convert** operator is added to support variable renaming or subsititution. The idea is based on alpha-conversion of lamda calculus.
+JSON-FP is homoiconic. That is you can manipulate JSON-FP programs the exact same way as you manipulate JSON objects. Becuase of that, using JSON-FP to do metaprogramming could be very easy.
 
-There is a simple example in [testLamda.js](https://github.com/benlue/jsonfp/blob/master/test/testLamda.js) if you're interested.
+The latest release (0.1.0) supports two metaprogramming related operators: **convert** and **formula**. The **formula** operator helps developers to define expression formula which can be reused and served as building blocks for more complicated JSON-FP programs. The **convert** operator can be used to apply those formula defined by the **formula** operator. To know more about how to use these two operators, you may want to check this [example](https://github.com/benlue/jsonfp-examples/blob/master/examples/metapro/metaProgram.js).
+
+There are some simple examples in [testLamda.js](https://github.com/benlue/jsonfp/blob/master/test/testLamda.js) if you're interested.
 
 

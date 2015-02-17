@@ -1,3 +1,7 @@
+## 0.1.0
+
++ Added the **formula** operator for metaprogramming. Developers now can use the **formula** operator to define a JSON-FP formula and use the **convert** operator to apply a formula.
+
 ## 0.0.9
 
 + Added the [if](https://github.com/benlue/jsonfp/blob/master/doc/builtInOp.md#if) operator.

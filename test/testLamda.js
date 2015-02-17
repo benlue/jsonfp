@@ -179,7 +179,7 @@ describe('JSON-FP programming...', function() {
 
     it('test reduction', function() {
         var  p = {chain: [
-                {convert:
+                {formula:
                     {
                         var: 'x',
                         expr: ['/Person/query/', 'x']
@@ -230,7 +230,7 @@ describe('JSON-fp meta programming...', function() {
         // The nice thing is that if we change 'expr' in the context variable,
         // we can generate a different program.
         var  p = {eval:
-                {convert:
+                {formula:
                     {
                         _input: '$expr',
                         _expr: {
