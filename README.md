@@ -9,6 +9,8 @@ JSON-FP is part of an attempt to make data freely and easily accessed, distribut
     
 ## What's new
 
++ Adding customized operators to the JSON-FP runtime has been standardized (0.1.1). Please check [Developing and Installing Packages]() for details.
+
 + Added the **formula** operator for metaprogramming. Developers now can use the **formula** operator to define a JSON-FP formula and use the **convert** operator to apply a formula (0.1.0).
 
 + The **if** operator is added to the language even though you can achieve the same effect without it. Also temporary results can be saved to the context variable as side effects. Check [here](#setVar) for further explanations on variable settings (0.0.9).

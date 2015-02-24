@@ -1,3 +1,7 @@
+## 0.1.1
+
++ Formalized how customized operators are implemented and installed to a JSON-FP runtime.
+
 ## 0.1.0
 
 + Added the **formula** operator for metaprogramming. Developers now can use the **formula** operator to define a JSON-FP formula and use the **convert** operator to apply a formula.
