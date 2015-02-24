@@ -9,7 +9,7 @@ JSON-FP is part of an attempt to make data freely and easily accessed, distribut
     
 ## What's new
 
-+ Adding customized operators to the JSON-FP runtime has been standardized (0.1.1). Please check [Developing and Installing Packages]() for details.
++ Adding customized operators to the JSON-FP runtime has been standardized (0.1.1). Please check [Developing and Installing Packages](https://github.com/benlue/jsonfp/blob/master/doc/extPackage.md) for details.
 
 + Added the **formula** operator for metaprogramming. Developers now can use the **formula** operator to define a JSON-FP formula and use the **convert** operator to apply a formula (0.1.0).
 
@@ -42,6 +42,7 @@ For details about what's new in the current release, please check the [release n
     + [jsonfp.isExpression()](#isExp)
     + [jsonfp.addMethod()](#jfpAddMethod)
     + [jsonfp.removeMethod()](#jfpRemoveMethod)
++ [Customizing JSON-FP](#customization)
 + [Metaprogramming](#meta)
 
 <a name="started"></a>
@@ -251,6 +252,10 @@ Adds an customized operator to the JSON-FP runtime. _name_ is the operator name,
 <a name="jfpRemoveMethod"></a>
 #### jsonfp.removeMethod(name)
 Removes an operator from a JSON-FP runtime.
+
+<a name="customization"></a>
+## Customizing JSON-FP
+One of JSON-FP's great features is the ability to extend the language by adding customized operators. Since v0.1.1, a recommended way to develop and install customized operators have been introduced. With that, third party functions can be grouped and installed as packages, and you can freely customize the JSONF-FP runtime as you need. For details, you can check "[Developing and Installing Packages](https://github.com/benlue/jsonfp/blob/master/doc/extPackage.md)" for details.
 
 <a name="meta"></a>
 ## Metaprogramming
