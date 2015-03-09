@@ -1,3 +1,7 @@
+## 0.1.2
+
++ The following operators are added: bitwise and, or, exclusive-or.
+
 ## 0.1.1
 
 + Formalized how customized operators are implemented and installed to a JSON-FP runtime.

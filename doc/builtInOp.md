@@ -4,6 +4,7 @@ JSON-FP Built-In Operators
 JSON-FP comes with built-in operators. These operators are categorized into 5 different groups.
 
 + [Core](#core)
+  + [->](#chainAbbr)
   + [chain](#chain)
   + [convert](#convert)
   + [formula](#formula)
@@ -19,6 +20,9 @@ JSON-FP comes with built-in operators. These operators are categorized into 5 di
   + [max](#max)
   + [and](#and)
   + [or](#or)
+  + [bitwise and](#bwAnd)
+  + [bitwise or](#bwOr)
+  + [bitwise exclusive-or](#bwXor)
 + [Arrays](#arrays)
   + [compact](#compact)
   + [difference](#difference)
@@ -49,6 +53,10 @@ JSON-FP comes with built-in operators. These operators are categorized into 5 di
 <a name="core"></a>
 ## Core
 The core group provides the minimum operators for a JSON-FP runtime.
+
+<a name="chainAbbr"></a>
+### ->
+This is the shorthand notation of the "chain operator" which is explained below.
 
 <a name="chain"></a>
 ### chain
@@ -168,6 +176,18 @@ The result should be false because _(28 && false)_ should yield false.
 <a name="or"></a>
 ### or
 This operator will return the logical "or" of _input_ and _option_. Similar to the "and" operator, if _input_ is an object and _option_ is an array of strings, each element of the _option_ array will be used as the property key to the _input_ object and logical "or" is applied on property values.
+
+<a name="bwAnd"></a>
+### bitwise and
+This operator will return value of bitwise ANDing _input_ and _option_.
+
+<a name="bwOr"></a>
+### bitwise or
+This operator will return value of bitwise ORing _input_ and _option_.
+
+<a name="bwXor"></a>
+### bitwise exclusive-or
+This operator will return the bitwise exclusive or of _input_ and _option_.
 
 <a name="arrays"></a>
 ## Arrays

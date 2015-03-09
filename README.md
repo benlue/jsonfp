@@ -177,7 +177,6 @@ will save the name and hobby of a person to the _'$name'_ and _'$hobby'_ variabl
     var expr = 
     {eval:
         {
-
             response: {
                 _input: ['$name', ' likes ', '$hobby'],
 				_expr: {reduce: 'add'}
@@ -187,11 +186,19 @@ will save the name and hobby of a person to the _'$name'_ and _'$hobby'_ variabl
         }
     };
 
-You'll **not** get the expected result.
+You'll **not** get the expected result because of the execution sequence.
 
 Also note that, variables will not show up in results. The above example if done correctly will generate the result as (assuming input is {name: 'David', hobby: 'meditation'})
 
     {
+        response: 'David likes meditation'
+    }
+    
+rather than
+
+    {
+        $name: 'David',
+        $hobby: 'meditation',
         response: 'David likes meditation'
     }
     
@@ -203,7 +210,7 @@ What operators are available in a JSON-FP runtime will decide its capabilities, 
 
 The current implementation comes with more than 30 operators. To view the list and usage of these built-in operators, please refre to this [page](https://github.com/benlue/jsonfp/blob/master/doc/builtInOp.md) for details.
 
-So if you need some functions not supported by the built-in operators, you can simply add your own! Below is an example:
+If you need some functions not supported by the built-in operators, you can simply add your own! Below is an example:
 
     var  jsonfp = require('jsonfp');
     
@@ -219,7 +226,7 @@ JSON-FP by default will evaluate the expression option before feeding the option
         return  input[expr];
     };
     
-If you specify the _defOption_ property as true when adding methods to the JSON-FP runtime, that will stop JSON-FP from evaluating the option to the operator.
+If you specify the _defOption_ property as true when adding methods to the JSON-FP runtime, that will stop JSON-FP from automaticaly evaluating the option.
 
 <a name="api"></a>
 ### API
