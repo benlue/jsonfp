@@ -1,3 +1,15 @@
+## 0.2.0
+
++ Starting from this release, it's required to run _jsonfp.init()_ before the runtime engine can start evaluating expressions.
+
++ Using **layers** to provide customized functions to a JSON-FP runtime.
+
++ Added the 'random' and 'clone' operator. Check [Built-in Operators](https://github.com/benlue/jsonfp/blob/master/doc/builtInOp.md) for details.
+
++ The 'true' or 'false' expression of the 'if' operator should be lazily evaluated. This release correctly made it so.
+
++ Fixed bugs where the value '0' was mistaken as null or undefined.
+
 ## 0.1.2
 
 + The following operators are added: bitwise and, or, exclusive-or.

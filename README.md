@@ -53,6 +53,8 @@ If you really like to dive in, you can check out the [example project](https://g
 
 + **[testOp.js](https://github.com/benlue/jsonfp/blob/master/test/testOp.js)**: unit tests for operators.
 
++ **[testRecursion.js](https://github.com/benlue/jsonfp/blob/master/test/testRecursion.js)**: showing how to do recursive calls.
+
 + **[testSyntax.js](https://github.com/benlue/jsonfp/blob/master/test/testSyntax.js)**: how variables, objects and arrays are evaluated.
 
 + **[testVariables.js](https://github.com/benlue/jsonfp/blob/master/test/testVariables.js)**: how to set and use variables.

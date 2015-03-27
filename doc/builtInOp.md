@@ -16,6 +16,7 @@ JSON-FP comes with built-in operators. These operators are categorized into 5 di
   + [subtract](#subtract)
   + [multiply](#multiply)
   + [divide](#divide)
+  + [random](#ramdon)
   + [min](#min)
   + [max](#max)
   + [and](#and)
@@ -32,6 +33,7 @@ JSON-FP comes with built-in operators. These operators are categorized into 5 di
   + [union](#union)
   + [zipObject](#zipObject)
 + [Collections](#collections)
+  + [clone](#clone)
   + [filter](#filter)
   + [find](#find)
   + [getter](#getter)
@@ -154,6 +156,10 @@ Multiplying _input_ with _option_. Both operands should be numeric values.
 ### divide
 Dividing _input_ by _option_.
 
+<a name="random"></a>
+### random
+Returning a random number by calling Math.random().
+
 <a name="min"></a>
 ### min
 Returning the minimum of _input_ and _option_.
@@ -222,6 +228,10 @@ Creates an object with keys from the input array and values from the option arra
 
 <a name="collections"></a>
 ## Collections
+
+<a name="clone"></a>
+### clone
+Cloning the input object.
 
 <a name="filter"></a>
 ### filter

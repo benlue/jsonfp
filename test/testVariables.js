@@ -68,8 +68,9 @@ describe('JSON-FP variables...', function() {
 			};
 		var  ctx = {},
 	 		 result = jsonfp.apply(ctx, pitchers, expr);
+	 	//console.log(JSON.stringify(result, null, 4));
 
-	 	assert.equal(result.pitchers.length, 1, 'One pitcher matches');
+	 	assert.equal(result.pitchers.length, 1, 'One pitcher matched');
 	 	assert.equal(result.pitchers[0].name, 'Bumgarner', 'who is bumgarner');
 	 	assert(ctx.stat.era, 'the average era');
     });
