@@ -57,23 +57,23 @@ describe('Test syntax...', function() {
 
         // we can explicitly specify input to an expression
         expr = {
-            name: {add:
-                {
-                    _input: 'John',
-                    _expr: ' Lennon'
-                }
+            name: {
+                '->': [
+                    ['John', ' Lennon'],
+                    {reduce: 'add'}                
+                ]
             },
-            path: {add:
-                {
-                    _input: '/usr',
-                    _expr: '/lib'
-                }
+            path: {
+                '->': [
+                    ['/usr', '/lib'],
+                    {reduce: 'add'}                
+                ]
             }
         };
-        result = lamda.apply('whatever', expr);
+        result = lamda.apply(null, expr);
+        //console.log(JSON.stringify(result, null, 4));
         assert.equal(result.name, 'John Lennon', 'name is John Lennon');
         assert.equal(result.path, '/usr/lib', 'path is /usr/lib');
-        //console.log(JSON.stringify(result, null, 4));
     });
 
     it('evaluate array', function() {

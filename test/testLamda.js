@@ -230,15 +230,15 @@ describe('JSON-fp meta programming...', function() {
         // The nice thing is that if we change 'expr' in the context variable,
         // we can generate a different program.
         var  p = {eval:
-                {formula:
-                    {
-                        _input: '$expr',
-                        _expr: {
+                {'->': [
+                    '$expr',
+                    {formula:
+                        {
                             var: 'e',
                             expr: {map: 'e'}
                         }
                     }
-                },
+                ]}
              },
              expr = {def: {pick: 'title'}},
              ctx = {expr: expr},

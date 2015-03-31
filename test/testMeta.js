@@ -48,14 +48,18 @@ describe('Expression formula and metaprogramming...', function() {
 				eval: {
 					era: {
 						eval: {
-							_input: 'era',
-							_expr: avgTemplate
+							'->': [
+								'era',
+								avgTemplate
+							]
 						}
 					},
 					salary: {
 						eval: {
-							_input: 'salary',
-							_expr: avgTemplate
+							'->': [
+								'salary',
+								avgTemplate
+							]
 						}
 					}
 				}

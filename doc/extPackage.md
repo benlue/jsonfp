@@ -7,9 +7,8 @@ One of JSON-FP's many interesting features is the ability to extend the language
 Instead of freely adding customized operators one by one to a JSON-FP runtime, you may want to group operators in a package and install them all at once. A package is nothing more than a node module with an exported _install()_ function. The sample code below can be used as a boilerplate for writing your own customized package:
 
     exports.install = function(jsonfp, pkgName)  {
-        pkgName = pkgName || 'default_pkg_name';
+        pkgName = (pkgName || 'default_pkg_name') + '/';
 
-        var  pkgPath = pkgName + '/';
         // now one by one install each operator to the JSON-FP runtime
         jsonfp.addMethod( pkgPath + 'opName1', opFunction1);
         ...

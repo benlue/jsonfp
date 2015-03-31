@@ -86,8 +86,10 @@ describe('JSON-FP variables...', function() {
 				$name: {getter: 'name'},
 				$hobby: {getter: 'hobby'},
 				response: {
-					_input: ['$name', ' likes ', '$hobby'],
-					_expr: {reduce: 'add'}
+					'->': [
+						['$name', ' likes ', '$hobby'],
+						{reduce: 'add'}
+					]
 				}
 			}
 		};
