@@ -1,13 +1,15 @@
 JSON-FP
 =======
 
-In a decentralized computing environment, it's a better practice to pass programming codes to various machines to execute (and then gather the results) when the application is dealing with huge amount of data. However, how can machines of various configurations understand each other? Also, the "moving code, least moving data" policy may work better with functional programming than imperative programming.
+In a decentralized computing environment, when applications are dealing with huge amount of data it's a better practice to pass programming codes to various machines than moving data. However, how can machines of various configurations understand each other? Also, the "moving code, least moving data" policy would work better in functional programming than imperative programming.
 
 Those questions/issues lead to the idea of doing functional programming in JSON. If programs can be coded in JSON, they can be easily shipped around and understood by machines of vaious settings. Combining JSON and functional programming also makes security issues easier to track or manage.
 
 JSON-FP is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-FP is trying to achieve.
     
 ## What's new
+
++ The concept of streaming data is introduced in v 0.2.1. For descriptions and examples, please check [Using "Streams" As Data Generators](https://github.com/benlue/jsonfp-examples/tree/master/examples/stream).
 
 + Adding customized operators to the JSON-FP runtime has been standardized (0.1.1). Please check [Developing and Installing Packages](https://github.com/benlue/jsonfp/blob/master/doc/extPackage.md) for details.
 
@@ -17,13 +19,11 @@ JSON-FP is part of an attempt to make data freely and easily accessed, distribut
 
 + The **chain** operator is so frequently used in a JSON-FP program. To make it more intuitive and readable, you can now use '->' in place of 'chain' (0.0.8).
 
-+ Developers have an option to use either promise or callback to deal with asynchronous calls (0.0.7). 
-
 For details about what's new in the current release, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
 
 ## Install
 
-    npm install jsonfp
+    npm install -g jsonfp
 
 ## Contents
 
@@ -47,23 +47,22 @@ For details about what's new in the current release, please check the [release n
 
 <a name="started"></a>
 ## Getting started
-If you really like to dive in, you can check out the [example project](https://github.com/benlue/jsonfp-examples). In addition to that, test files under the _test_ directory is also a good place to start:
+An [example project](https://github.com/benlue/jsonfp-examples) has been created to demonstrate how to write JSON-FP expressions. In addition to that, test files under the _test_ directory is also a good place to start. Below are some examples you may want to check:
 
-+ **[testLamda.js](https://github.com/benlue/jsonfp/blob/master/test/testLamda.js)**: testing some of the real application test cases. Alpha-conversion and meta programming test cases can also be found here.
++ **[simple](https://github.com/benlue/jsonfp-examples/blob/master/examples/simple/simple.js)**: very simple examples to help you getting familiar with JSON-FP.
 
-+ **[testOp.js](https://github.com/benlue/jsonfp/blob/master/test/testOp.js)**: unit tests for operators.
++ **[stream](https://github.com/benlue/jsonfp-examples/tree/master/examples/stream)**: showing how to use streams as input to JSON-FP expressions. In particular, the example shows how to use the iterator stream to replace the for-loop statement.
 
-+ **[testRecursion.js](https://github.com/benlue/jsonfp/blob/master/test/testRecursion.js)**: showing how to do recursive calls.
++ **[object query](https://github.com/benlue/jsonfp-examples/blob/master/examples/ObjectQuery/ObjectQuery.js)**: showing how to query a list of JSON objects with various conditions.
 
-+ **[testSyntax.js](https://github.com/benlue/jsonfp/blob/master/test/testSyntax.js)**: how variables, objects and arrays are evaluated.
-
-+ **[testVariables.js](https://github.com/benlue/jsonfp/blob/master/test/testVariables.js)**: how to set and use variables.
++ **[metaprogramming](https://github.com/benlue/jsonfp-examples/tree/master/examples/metapro)**: showing how to do alpha-conversion in JSON-FP.
 
 <a name="run"></a>
 ### Run programs
 Below is how you can run or evaluate a JSON-FP program:
 
     var  jsonfp = require('jsonfp');
+    jsonfp.init();
     
     // providing a context(ctx) to run 'program' with 'input'
     jsonfp.apply(ctx, input, program);
@@ -106,16 +105,18 @@ By repeatedly substituting expression value with another JSON-FP expression, an 
 
 <a name="input"></a>
 ### Expression input
-When running a JSON-FP program, you have to provide the initial input data. After that, the input data flow will become implicit. For example, when operators are chained, input data will be fed to the beginning of the chain and every operator will get its input from the output of its predecesor. Another example is the 'map' operator which will iterate through its input (should be an array or a collection) and feed each element as the input to its child expression. In other words, the parent expression will decide how to provide input to its child expressions without needing explicit specifications by application developers.
+When running a JSON-FP program, you have to provide the initial input data. After that, the data flow will become implicit. For example, when operators are chained, input data will be fed to the beginning of the chain and every operator will get its input from the output of its predecesor. Another example is the 'map' operator which will iterate through its input (should be an array or a collection) and feed each element as the input to its child expression. In other words, the parent expression will decide how to provide input to its child expressions without needing explicit specifications by application developers.
 
-However, sometimes it may be convenient or even necessary to explicitly specify input to a JSON-FP expression. In that case, you can do the following:
+However, if you want to change the implicit data flow, you can use the 'chain' operator to achieve that. Below is an example:
 
-    var  expr = {
-        	_input: INPUT_TO_THE_EXPRESSION
-        	_expr: THE_ACTUATION_JSON-FP_EXPRESSION
-         };
+    {
+        '->': [
+            {name: 'David', age: 28},
+            {getter: 'age'}
+        ]
+    }
 
-In other words, you can wrap up a JSON-FP expression within a plain object and specify the input in that object.
+If you evaluate the above expression, the result will be 28. The first one of the chained expressions is becoming the input to the second expression. With that technique, you can change expression input as you wish.
 
 <a name="evaluation"></a>
 ### Evaluation

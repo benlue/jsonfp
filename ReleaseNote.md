@@ -1,3 +1,9 @@
+## 0.2.1
+
++ The concept of streaming data was introduced. In particular, the iterator stream was introduced to void the usage of for-loop.
+
++ The supprot of the {_input: , _expr: } format to change expression input has been dropped in favor of the chain operator. The same effect can be achieved by specifying input as the first expression of the chained expressions.
+
 ## 0.2.0
 
 + Starting from this release, it's required to run _jsonfp.init()_ before the runtime engine can start evaluating expressions.
