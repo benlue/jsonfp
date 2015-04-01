@@ -2,5 +2,6 @@
 .svn
 .*.swp
 .git
+.project
 node_modules
 npm-debug.log

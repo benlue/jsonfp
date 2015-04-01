@@ -5,4 +5,5 @@
 .hg
 .lock_wscript
 .svn
+.project
 npm-debug.log

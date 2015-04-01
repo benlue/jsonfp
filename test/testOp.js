@@ -23,6 +23,7 @@ describe('Test build-in operators...', function() {
             }
         };
         result = lamda.apply( {def: {pick: 'name'}}, p );
+        //console.log( JSON.stringify(result, null, 4) );
         assert.equal(result.map.def.pick, 'name', 'pick names');
 
         // case 3: expression is an array
@@ -66,21 +67,21 @@ describe('Test build-in operators...', function() {
         assert.equal(result.length, 3, 'should have 3 elements');
     });
 
-    it('flatten', function() {
+    it('where', function() {
         var  list = [
                 {name: 'John', project: 'coServ'},
                 {name: 'David', project: 'react'}
              ],
              p = {
-                 flatten: {project: 'coServ'}
+        		where: {project: 'coServ'}
              };
 
          var  result = lamda.apply( list, p );
+         //console.log( JSON.stringify(result, null, 4) );
          assert(result[0], 'should be true');
          assert(!result[1], 'should be false');
-         //console.log( JSON.stringify(result, null, 4) );
 
-         p.flatten = {project: '$project'};
+         p.where = {project: '$project'};
          var  ctx = {project: 'coServ'};
          result = lamda.apply( ctx, list, p );
          assert(result[0], 'should be true');

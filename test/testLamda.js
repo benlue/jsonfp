@@ -111,7 +111,7 @@ describe('JSON-FP programming...', function() {
                                 }
                             },
                             {take: '$showTag'},
-                            {flatten: 'tword'}
+                            {map: {getter: 'tword'}}
                             ]
                         }
                     }
@@ -152,7 +152,7 @@ describe('JSON-FP programming...', function() {
                                         }
                                     },
                                     {
-                                        flatten: 'tword'
+                                        map: {getter: 'tword'}
                                     }
                                 ]
                             }
