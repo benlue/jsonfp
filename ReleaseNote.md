@@ -1,3 +1,7 @@
+## 0.2.2
+
++ Added the 'head', 'tail' and 'bucket' operator.
+
 ## 0.2.1
 
 + The concept of streaming data was introduced. In particular, the iterator stream was introduced to void the usage of for-loop.
