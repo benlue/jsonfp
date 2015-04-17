@@ -1,7 +1,7 @@
 JSON-FP
 =======
 
-In a decentralized computing environment, when applications are dealing with huge amount of data it's a better practice to pass programming codes to various machines than moving data. However, how can machines of various configurations understand each other? Also, the "moving code, least moving data" policy would work better in functional programming than imperative programming.
+In a decentralized computing environment, when applications are dealing with huge amount of data it's a better practice to pass programming codes to various machines than moving data. However, how can machines of various configurations understand each other? Also, the "moving code, least moving data" policy would arguably work better in the functional programming paradigm than the imperative one.
 
 Those questions/issues lead to the idea of doing functional programming in JSON. If programs can be coded in JSON, they can be easily shipped around and understood by machines of vaious settings. Combining JSON and functional programming also makes security issues easier to track or manage.
 
@@ -12,7 +12,7 @@ Want to play with JSON-FP to see how it works? You can test your JSON-FP code on
 
 ## What's new
 
-+ Four new operators (head, tail, bucket and infix) are introduced to the runtime core. The _bucket_ operator can be used to distribute input list into sub-list (buckets) based on conditions specified (v-0.2.2).
++ Four new operators (head, tail, bucket and infix) are introduced to the runtime core. The _bucket_ operator can be used to distribute input list into sub-list (buckets) based on the bucket conditions or predicates (v-0.2.2).
 
 + The _infix_ operator is introduced to solve the problem that JSON-FP always work on input as a whole. Consider adding two numbers x and y. This could be tricky if you don't want to introduce any side effect to your JSON-FP expression. With the _infix_ operator, the problem can be easily solved by doing: _infix: ['$in.x', {add: '$in.y'}]_.
 
