@@ -1,6 +1,12 @@
 ## 0.2.2
 
++ The 'infix' operator was introduced. Normally JSON-FP will evaluate the expression option before evaluating the expression itself. That may lead to a problem that we can only work on input as a whole instead of working on part of the input. The 'infix' operator can solve the problem.
+
 + Added the 'head', 'tail' and 'bucket' operator.
+
++ Cleaned up error handling.
+
++ Added the quicksort and word-count test cases.
 
 ## 0.2.1
 

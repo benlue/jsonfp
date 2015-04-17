@@ -7,17 +7,20 @@ Those questions/issues lead to the idea of doing functional programming in JSON.
 
 JSON-FP is part of an attempt to make data freely and easily accessed, distributed, annotated, meshed, even re-emerged with new values. To achieve that, it's important to be able to ship codes to where data reside, and that's what JSON-FP is trying to achieve.
     
+## JSON-FP playground
+Want to play with JSON-FP to see how it works? You can test your JSON-FP code online and find examples at [JSON-FP playground](http://playground.jsonfp.org).
+
 ## What's new
 
-+ The concept of streaming data is introduced in v 0.2.1. For descriptions and examples, please check [Using "Streams" As Data Generators](https://github.com/benlue/jsonfp-examples/tree/master/examples/stream).
++ Four new operators (head, tail, bucket and infix) are introduced to the runtime core. The _bucket_ operator can be used to distribute input list into sub-list (buckets) based on conditions specified (v-0.2.2).
 
-+ Adding customized operators to the JSON-FP runtime has been standardized (0.1.1). Please check [Developing and Installing Packages](https://github.com/benlue/jsonfp/blob/master/doc/extPackage.md) for details.
++ The _infix_ operator is introduced to solve the problem that JSON-FP always work on input as a whole. Consider adding two numbers x and y. This could be tricky if you don't want to introduce any side effect to your JSON-FP expression. With the _infix_ operator, the problem can be easily solved by doing: _infix: ['$in.x', {add: '$in.y'}]_.
 
-+ Added the **formula** operator for metaprogramming. Developers now can use the **formula** operator to define a JSON-FP formula and use the **convert** operator to apply a formula (0.1.0).
++ The concept of streaming data is introduced in v-0.2.1. For descriptions and examples, please check [Using "Streams" As Data Generators](https://github.com/benlue/jsonfp-examples/tree/master/examples/stream).
 
-+ The **if** operator is added to the language even though you can achieve the same effect without it. Also temporary results can be saved to the context variable as side effects. Check [here](#setVar) for further explanations on variable settings (0.0.9).
++ Adding customized operators to the JSON-FP runtime has been standardized (v-0.1.1). Please check [Developing and Installing Packages](https://github.com/benlue/jsonfp/blob/master/doc/extPackage.md) for details.
 
-+ The **chain** operator is so frequently used in a JSON-FP program. To make it more intuitive and readable, you can now use '->' in place of 'chain' (0.0.8).
++ Added the **formula** operator for metaprogramming. Developers now can use the **formula** operator to define a JSON-FP formula and use the **convert** operator to apply a formula (v-0.1.0).
 
 For details about what's new in the current release, please check the [release note](https://github.com/benlue/jsonfp/blob/master/ReleaseNote.md).
 
@@ -53,6 +56,8 @@ An [example project](https://github.com/benlue/jsonfp-examples) has been created
 
 + **[stream](https://github.com/benlue/jsonfp-examples/tree/master/examples/stream)**: showing how to use streams as input to JSON-FP expressions. In particular, the example shows how to use the iterator stream to replace the for-loop statement.
 
++ **[quick sort](https://github.com/benlue/jsonfp-examples/blob/master/examples/quickSort/quickSort.js)**: the classic quick sort algorithm is implemented in JSON-FP.
+
 + **[object query](https://github.com/benlue/jsonfp-examples/blob/master/examples/ObjectQuery/ObjectQuery.js)**: showing how to query a list of JSON objects with various conditions.
 
 + **[metaprogramming](https://github.com/benlue/jsonfp-examples/tree/master/examples/metapro)**: showing how to do alpha-conversion in JSON-FP.
@@ -74,9 +79,9 @@ _program_ should be a JSON-FP program and _input_ can be any value. _Context_ is
 
 <a name="proCb"></a>
 ### Promise or callback
-Built-in operators of the current implementation all will do their jobs synchronously. However, if you add your own customized operators and they would do things asynchronously, those asynchronous operators should return a promise to JSON-FP. JSON-FP knows how to deal with promise.
+Built-in operators of the current implementation will do their jobs synchronously. However, if you add your own customized operators and they would do things asynchronously, those asynchronous operators should return a promise to JSON-FP. JSON-FP knows how to deal with promise.
 
-JSON-FP supports both promise and callbacks to deal with those asynchronous situations. In other words, if you expect the computation of your JSON-FP expression will be done asynchroously, you can either use the promise style:
+Other than operators, JSON-FP supports both promise and callbacks to deal with those asynchronous situations. In other words, if you expect the computation of your JSON-FP expression will be done asynchroously, you can either use the promise style:
 
     jsonfp.apply(input, expr).then(function(value) {
         // value is the result
