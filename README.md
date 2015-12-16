@@ -56,9 +56,9 @@ An [example project](https://github.com/benlue/jsonfp-examples) has been created
 
 + **[stream](https://github.com/benlue/jsonfp-examples/tree/master/examples/stream)**: showing how to use streams as input to JSON-FP expressions. In particular, the example shows how to use the iterator stream to replace the for-loop statement.
 
-+ **[quick sort](https://github.com/benlue/jsonfp-examples/blob/master/examples/quickSort/quickSort.js)**: the classic quick sort algorithm is implemented in JSON-FP.
++ **[quick sort](https://github.com/benlue/jsonfp-examples/blob/master/examples/quickSort/quickSort.js)**: the classic quick sort algorithm implemented in JSON-FP.
 
-+ **[object query](https://github.com/benlue/jsonfp-examples/blob/master/examples/ObjectQuery/ObjectQuery.js)**: showing how to query a list of JSON objects with various conditions.
++ **[object query](https://github.com/benlue/jsonfp-examples/blob/master/examples/ObjectQuery)**: showing how to query a list of JSON objects with various conditions.
 
 + **[metaprogramming](https://github.com/benlue/jsonfp-examples/tree/master/examples/metapro)**: showing how to do alpha-conversion in JSON-FP.
 
@@ -106,11 +106,11 @@ The interesting part is that _options_ can be yet another JSON-FP expression. A 
     	{"pick": "title"}
     }
 
-By repeatedly substituting expression value with another JSON-FP expression, an expression as simple as {op: options} can turn into a really sophisticated application.
+By repeatedly substituting expression value with another JSON-FP expression, an expression as simple as {op: options} can turn into a really sophisticated program.
 
 <a name="input"></a>
 ### Expression input
-When running a JSON-FP program, you have to provide the initial input data. After that, the data flow will become implicit. For example, when operators are chained, input data will be fed to the beginning of the chain and every operator will get its input from the output of its predecesor. Another example is the 'map' operator which will iterate through its input (should be an array or a collection) and feed each element as the input to its child expression. In other words, the parent expression will decide how to provide input to its child expressions without needing explicit specifications by application developers.
+When running a JSON-FP program, you have to provide the initial input data. After that, the data flow will become implicit. For example, when operators are chained, input data will be fed to the head of the chain and every succeeding operator will get its input from the output of its predecesor. Another example is the 'map' operator which will iterate through its input (could be an array or a collection) and feed each element as the input to its child expression. In other words, the parent expression will decide how to provide input to its child expressions without needing explicit specifications by application developers.
 
 However, if you want to change the implicit data flow, you can use the 'chain' operator to achieve that. Below is an example:
 
@@ -131,13 +131,15 @@ Anything that you send as an expression to JSON-FP will be evaluated recursively
     	 result = jsonfp.apply('Jones', expr);
     console.log( JSON.stringify(result) );
     		
-JSON-FP will try to evalute {name: 'David'} and find out there is nothing it should do, so the result printed out on console is exactly the same as the input. However, if you do something like:
+In the above example, JSON-FP will try to evalute {name: 'David'} but figure out there is nothing it should do. So the output will be exactly the same as the input.
+
+However, if you do something like:
 
     var  expr = {name: {add: ' Cooper'}},
     	 result = jsonfp.apply('David', expr);
     console.log( JSON.stringify(result) );
 
-This time JSON-FP will find something to work on and {name: 'David Cooper'} will be printed.
+This time JSON-FP finds something to work on and {name: 'David Cooper'} will be the output.
 
 <a name="variables"></a>
 ### Variables
@@ -158,7 +160,7 @@ Note that in the above example we provide a context variable (ctx) to supply the
 
 <a name="setVar"></a>
 #### Setting variables
-A JSON-FP expression can unfold itself as a series (or a tree of series) of expressions. Input to the expression will water fall through or be transformed by those series of expressions. Sometimes we need to keep the intermediate results coming off expressions and recall them when necessary. To do so, the intermediate results should be able to be saved.
+A JSON-FP expression can unfold itself as a series (or a tree of series) of expressions. Input to the expression will water fall through or be transformed by those series of expressions. Sometimes we need to keep the intermediate results and recall them when necessary. To do so, the intermediate results should be able to be saved.
 
 You ca save the intermediate results in the context variable like the following:
 
@@ -174,8 +176,10 @@ That will pick up the _name_ property of input and store it into the context var
             $name: {getter: 'name'},
             $hobby: {getter: 'hobby'},
             response: {
-                _input: ['$name', ' likes ', '$hobby'],
-				_expr: {reduce: 'add'}
+                "->" : [
+                    ['$name', ' likes ', '$hobby'],
+				    {reduce: 'add'}
+                ]
             }
         }
     };
@@ -186,15 +190,17 @@ will save the name and hobby of a person to the _'$name'_ and _'$hobby'_ variabl
     {eval:
         {
             response: {
-                _input: ['$name', ' likes ', '$hobby'],
-				_expr: {reduce: 'add'}
+                "->" : [
+                    ['$name', ' likes ', '$hobby'],
+				    {reduce: 'add'}
+                ]
             },
             $name: {getter: 'name'},
             $hobby: {getter: 'hobby'}
         }
     };
 
-You'll **not** get the expected result because of the execution sequence.
+You'll **not** get the expected result because of the reversed execution sequence.
 
 Also note that, variables will not show up in results. The above example if done correctly will generate the result as (assuming input is {name: 'David', hobby: 'meditation'})
 
